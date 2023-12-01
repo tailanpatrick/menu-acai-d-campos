@@ -1,0 +1,431 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+
+<head>
+    <meta charset="UTF-8">
+
+    <title>Acaí D' Campos: Faça seu pedido!</title>
+    <!--- Define o ícone do site (favicon)-->
+    <link rel="shortcut icon" href="./img/favicon.ico" type="image/x-icon"/>
+
+    <link rel="stylesheet" href="./css/bootstrap.min.css"/>
+    <link rel="stylesheet" href="./css/fontawesome.css"/>
+    <link rel="stylesheet" href="./css/animate.css"/>
+    <link rel="stylesheet" href="./css/main.css"/>
+    
+</head>
+
+<body>
+
+    <div class="container-mensagens" id="container-mensagens">
+
+    </div>
+
+    <a class="botao-carrinho hidden" onclick="cardapio.metodos.abrirCarrinho(true);">
+        <div class="badge-total-carrinho">0</div>
+        <i class="fa fa-shopping-bag"></i>
+    </a>
+
+    <section class="header">
+        <div class="container">
+            <nav class="navbar navbar-expand-lg pl-0 pr-0">
+                <a class="navbar-brand" href="#">
+                    <img src="./img/logo.png" width="150" class="img-logo" />
+                </a>
+                <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavDropdown">
+                    <span class="navbar-toggler-icon">
+                        <i class="fas fa-bars"></i>
+                    </span>
+                </button>
+
+                <div class="collapse navbar-collapse" id="#navbarNavDropdown">
+                    <ul class="navbar-nav ml-auto mr-auto">
+
+                        <li class="nav-item"><a href="#cardapio" class="nav-link"><b>Cardápio</b></a></li>
+                        <li class="nav-item"><a href="#sobre" class="nav-link"><b>Sobre Nós</b></a></li>
+
+                    </ul>
+                    <a class="btn btn-white btn-icon" onclick="cardapio.metodos.abrirCarrinho(true);">
+                       
+                        Meu Carrinho <span class="icon">
+                            <div class="container-total-carrinho badge-total-carrinho hidden">0</div>
+                            <i class="fa fa-shopping-bag"></i>
+                        </span>
+                    </a>
+                </div>
+            </nav>
+        </div>
+    </section>
+
+    <section class="banner">
+        <div class="container">
+            <div class="row">
+                <div class="col-6">
+                    <div class="d-flex text-banner">
+                        <h1>
+                            <b>Escolha seu <b class="color-primary">Acaí</b>, <b class="color-primary">Sorvete ou
+                                    Milk-Shake</b> da forma que preferir.</b>
+                        </h1>
+                        <p>
+                            Aproveite nosso cardápio! Escolha o que desejar e receba no conforto da sua casa.
+                        </p>
+                        <div>
+                            <a class="btn btn-sm btn-white btn-social mt-4 mr-3" href="">
+                                <i class="fab fa-instagram social-icon"
+                                    data-tooltip="Veja nosso instagram @acaidcampos"></i>
+                            </a>
+                            <a class="btn btn-sm btn-white btn-social mt-4 mr-3" href="">
+                                <i class="fas fab fa-map-marked-alt social-icon" data-tooltip="Onde Estamos "></i>
+                            </a>
+                            <a class="btn btn-sm btn-white btn-social mt-4">
+                                <i class="fab fa-whatsapp social-icon"
+                                    data-tooltip="Chame no Whatsapp para um pedido em específico.."></i>
+                            </a>
+
+                            <a class="btn btn-purple mt-4 mr-3" href="#cardapio">
+                                Ver cardápio
+                            </a>
+
+                        </div>
+                    </div>
+
+                </div>
+                <div class="col-6">
+                    <div class="card-banner"></div>
+                    <div class="d-flex img-banner">
+                        <img src="./img/tigela-acai (1).png" alt="">
+                    </div>
+
+                    <div class="card card-case">
+                        "O açaí mais saboroso da região! "
+                    </div>
+                </div>
+
+            </div>
+
+        </div>
+
+    </section>
+
+    <section class="cardapio" id="cardapio">
+        <div class="container">
+            <div class="row">
+
+                <div class="col-12 text-center mb-5">
+                    <span class="hint-title"><b>Cardápio</b></span>
+                    <h1 class="title">
+                        <b>Conheça o nosso cardápio</b>
+                    </h1>
+                </div>
+
+                <div class="col-12 container-menu">
+                    <a id="menu-acai-creme" class="btn btn-white btn-sm-2 mr-3 active" onclick="cardapio.metodos.obterItensCardapio('acai-creme')">
+                        <div class="icon-creme"></div> Creme de Açaí
+
+                    </a>
+                    <a id="menu-acai-vitamina" class="btn btn-white btn-sm-2 mr-3" onclick="cardapio.metodos.obterItensCardapio('acai-vitamina')">
+                        <div class="icon-vitamina"></div> Vitamina de Açaí
+
+                    </a>
+
+                    <a id="menu-milk-shake" class="btn btn-white btn-sm-2 mr-3 " onclick="cardapio.metodos.obterItensCardapio('milk-shake')">
+                        <div class="icon-milkshake"></div> Milk-Shake
+
+                    </a>
+
+                </div>
+
+                <div class="col-12">
+                    <div class="row" id="itensCardapio">
+                        <!-- Aqui vão ser gerados os itens do Cardápio-->
+                    </div>
+                </div>
+
+            </div>
+        </div>
+
+    </section>
+
+    <section class="sobre" id="sobre">
+        <div class="container">
+            <div class="row">
+                <div class="col-5 text-center">
+                    <div class="card-sobre"></div>
+                    <div class="d-flex img-banner">
+                        <img class="img-sobre" src="./img/acai-sobre.webp" alt="">
+                    </div>
+                </div>
+
+                <div class="col-7">
+                    <span class="hint-title"><b>Sobre Nós</b></span>
+                    <h1 class="title">
+                        <b>Quem somos?</b>
+                    </h1>
+
+                    <div class="mb-5">
+                        <p class="paragrafo-sobre">Somos uma acaiteria apaixonada por proporcionar a você a melhor
+                            experiência com açaí. Fundada em 2021, estamos comprometidos em oferecer produtos de alta
+                            qualidade e sabores incríveis para nossos clientes.</p>
+
+                        <p class="paragrafo-sobre">Nosso compromisso com ingredientes frescos e um ambiente acolhedor,
+                            torna a compra em Açaí D' Campos uma experiência memorável.</p>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <footer>
+        <div class="container">
+            <div class="row">
+                <div class="col-3 container-logo-footer">
+                    <img class="logo-footer" src="./img/logo.png" alt="">
+                </div>
+
+                <div class="col-6 container-texto-footer">
+                    <p class="mb-0">
+                        <b>Cardápio Online - Açaí D' Campos</b> &copy; Todos os direitos reservados
+                    </p>
+                </div>
+
+                <div class="col-3 container-redes-footer">
+                    <a class="btn btn-sm btn-white btn-social mr-3" href="">
+                        <i class="fab fa-instagram social-icon" data-tooltip="Veja nosso instagram @acaidcampos"></i>
+                    </a>
+                    <a class="btn btn-sm btn-white btn-social mr-3" href="">
+                        <i class="fas fab fa-map-marked-alt social-icon" data-tooltip="Onde Estamos "></i>
+                    </a>
+                    <a class="btn btn-sm btn-white btn-social" href="">
+                        <i class="fab fa-whatsapp social-icon"
+                            data-tooltip="Chame no Whatsapp para um pedido em específico.."></i>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <div class="modal-full hidden" id="modalCarrinho">
+        <div class="m-header">
+            <div class="container">
+                <a class="btn btn-white btn-sm float-right" onclick="cardapio.metodos.abrirCarrinho(false)">Fechar</a>
+                <div class="etapas">
+                    <div class="etapa etapa1 active">1</div>
+                    <div class="etapa etapa2">2</div>
+                    <div class="etapa etapa3">3</div>
+                </div>
+                <p class="title-carrinho mt-4">
+                    <b id="lblTituloEtapa">Seu carrinho:</b>
+                </p>
+            </div>
+        </div>
+
+        <div class="m-body">
+            <div class="container">
+                <div id="itensCarrinho" class="ml-0 mr-0 hidden">
+                    
+                    <!--AQUI-->
+
+
+                </div>
+
+                <div id="localEntrega" class="row mr-0 ml-0 hidden">
+                    <div class="col-4">
+                        <div class="form-group container-cep">
+                            <label>CEP:</label>
+                            <input id="txtCEP" type="text" class="form-control" />
+                            <a class="btn btn-purple btn-sm"><i class="fas fa-search"></i></a>
+                        </div>
+                    </div>
+                    <div class="col-8"></div>
+
+                    <div class="col-6">
+                        <div class="form-group">
+                            <label>Endereço:</label>
+                            <input id="txtEndereco" type="text" class="form-control">
+                        </div>
+                    </div>
+
+                    <div class="col-4">
+                        <div class="form-group">
+                            <label>Bairro:</label>
+                            <input id="txtBairro" type="text" class="form-control">
+                        </div>
+                    </div>
+
+                    <div class="col-2">
+                        <div class="form-group">
+                            <label>Número:</label>
+                            <input id="txtNumero" type="text" class="form-control">
+                        </div>
+                    </div>
+
+                    <div class="col-6">
+                        <div class="form-group">
+                            <label>Cidade:</label>
+                            <input id="txtCidade" type="text" class="form-control">
+                        </div>
+                    </div>
+
+                    <div class="col-4">
+                        <div class="form-group">
+                            <label>Complemento:</label>
+                            <input id="txtComplemento" type="text" class="form-control">
+                        </div>
+                    </div>
+
+                    <div class="col-2">
+                        <div class="form-group">
+                            <label>UF:</label>
+                            <select id="ddlUf" class="form-control">
+                                <option value="-1">...</option>
+                                <option value="AC">AC</option>
+                                <option value="AL">AL</option>
+                                <option value="AP">AP</option>
+                                <option value="AM">AM</option>
+                                <option value="BA">BA</option>
+                                <option value="CE">CE</option>
+                                <option value="DF">DF</option>
+                                <option value="ES">ES</option>
+                                <option value="GO">GO</option>
+                                <option value="MA">MA</option>
+                                <option value="MT">MT</option>
+                                <option value="MS">MS</option>
+                                <option value="MG">MG</option>
+                                <option value="PA">PA</option>
+                                <option value="PB">PB</option>
+                                <option value="PR">PR</option>
+                                <option value="PE">PE</option>
+                                <option value="PI">PI</option>
+                                <option value="RJ">RJ</option>
+                                <option value="RN">RN</option>
+                                <option value="RS">RS</option>
+                                <option value="RO">RO</option>
+                                <option value="RR">RR</option>
+                                <option value="SC">SC</option>
+                                <option value="SP">SP</option>
+                                <option value="SE">SE</option>
+                                <option value="TO">TO</option>
+                            </select>
+                        </div>
+                    </div>
+
+
+                </div>
+
+                <div id="resumoCarrinho" class="row mr-0 ml-0 hidden">
+                    <div class="col-12">
+                        <p class="title-carrinho mt-4">
+                            <b>Itens do pedido:</b>
+                        </p>
+                    </div>
+
+                    <div class="col-12">
+                        <div class="row" id="listaItensResumo">
+
+                            <div class="col-12 item-carrinho resumo">
+                                <div class="img-produto-resumo">
+                                    <img
+                                        src="./img/cardapio/burguers/burger-au-poivre-kit-4-pack.3ca0e39b02db753304cd185638dad518.jpg">
+                                </div>
+                                <div class="dados-produtos">
+
+                                    <p class="title-produto-resumo">
+                                        <b>Nome Produto</b>
+                                    </p>
+
+                                    <p class="price-produto-resumo">
+                                        <b>R$ 100,00</b>
+                                    </p>
+                                    <div class="acrescimos-resumo">
+                                        Acrescimos:<br>
+                                        <div class="acrescimo">
+                                            <b>*</b>Leite em Pó
+                                        </div>
+                                        <div class="acrescimo">
+                                            <b>*</b>Morango
+                                        </div>
+                                        <div class="acrescimo">
+                                            <b>*</b>Kiwi
+                                        </div>
+
+                                    </div>
+
+                                </div>
+                                <p class="quantidade-produto-resumo">
+                                    x <b>3</b>
+                                </p>
+                            </div>
+
+                            
+                        </div>
+                    </div>
+
+                    <div class="col-12">
+                        <p class="title-carrinho mt-4">
+                            <b>Local da Entrega:</b>
+                        </p>
+                    </div>
+
+                    <div class="col-12 endereco resumo">
+                        <div class="img-map">
+                            <i class="fas fa-map-marked-alt"></i>
+                        </div>
+
+                        <div class="dados-produto">
+                            <p class="texto-endereco">
+                                <b id="resumoEndereco">Rua teste, 200, bairro teste</b>
+                            </p>
+                            <p class="cidade-endereco" id="cidadeEndereco">
+                                Cidade-SP / 14711-000
+                            </p>
+                        </div>
+
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    
+
+    <div class="m-footer">
+        <div class="container">
+
+            <div class="container-total text-right mb-4">
+                <p class="mb-0 texto-total">
+                    <span><b>Total (Sem taxa de Entrega): </b></span>
+                    <span class="valor-total" id="lblValorTotal"><b>R$ 0,00</b></span>
+                </p>
+
+            </div>
+
+            <a onclick="cardapio.metodos.carregarEtapa(2);" class="btn btn-purple float-right hidden" id="btnEtapaPedido">
+                Continuar
+            </a>
+
+            <a onclick="cardapio.metodos.carregarEtapa(3);" class="btn btn-purple float-right hidden" id="btnEtapaEndereco">
+                Revisar Pedido
+            </a>
+
+            <a class="btn btn-purple float-right" id="btnEtapaResumo">
+                Enviar Pedido
+            </a>
+
+            <a onclick="cardapio.metodos.voltarEtapa();" class="btn btn-white float-right mr-3" id="btnEtapaVoltar">
+                Voltar
+            </a>
+        </div>
+    </div>
+    </div>
+
+
+    <script type="text/javascript" src="./js/jquery-1.12.4.min.js"></script>
+    <script type="text/javascript" src="./js/modernizr-3.5.0.min.js"></script>
+    <script type="text/javascript" src="./js/bootstrap.min.js"></script>
+    <script type="text/javascript" src="./js/popper.min.js"></script>
+    <script type="text/javascript" src="./js/dados.js"></script>
+    <script type="text/javascript" src="./js/app.js"></script>
+    
+</body>
+
+</html>
