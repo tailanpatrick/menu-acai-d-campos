@@ -71,6 +71,7 @@ cardapio.metodos = {
         cardapio.metodos.mensagem('Item adicionado ao carrinho', cor='green');
 
         cardapio.metodos.atualizarBadgeTotal();
+        cardapio.metodos.qtdItensCarrinho();
         
     },
 
@@ -93,6 +94,19 @@ cardapio.metodos = {
 
         $('.badge-total-carrinho').html(total)
     },
+
+    qtdItensCarrinho: () =>{
+        const qtdItens = MEU_CARRINHO.length;
+
+        $('#qtd-itens-carrinho').text(qtdItens);
+
+        if(qtdItens != 1){
+            $('#txt-qtd-itens-carrinho').text('Itens');
+        } else {
+            $('#txt-qtd-itens-carrinho').text('Item');
+        }
+        
+    }, 
 
     // abrir a modal de carrinho
     abrirCarrinho: (abrir) => {
@@ -217,7 +231,7 @@ cardapio.metodos = {
 
                     $("#itensCarrinho").append(itemCarrinho);
                     if(e.id.includes("1l")){
-                        $('#p-'+e.idCarrinho).text('Pode selecionar até 6 que não havera alteração no preço total, acima de 6 será cobrado R$ 1.50 por cada acrescimo comum adicional:');
+                        $('#p-'+ e.idCarrinho).text('Pode selecionar até 6 que não havera alteração no preço total, acima de 6 será cobrado R$ 1.50 por cada acrescimo comum adicional:');
                     }
                     // lista os acrescimos disponíveis para o item
                     $.each(ACRESCIMOS['acrescimos-comum'], (idAcrescimoComum, acrescimoComum) => {
@@ -249,6 +263,7 @@ cardapio.metodos = {
         }
     },
 
+    // imprime o icone do carrinho vazio
     carrinhoVazio: () => {
         $("#itensCarrinho").html('<p class="carrinho-vazio"><i class="fa fa-shopping-bag"></i> <b>Seu carrinho está vazio.</b></p>');
     }, 
@@ -267,7 +282,7 @@ cardapio.metodos = {
         let qtdAtual = parseInt($('#qntd-carrinho_' + id).text());
         $('#qntd-carrinho_' + id).html(qtdAtual + 1);
         cardapio.metodos.atualizarCarrinho(id, ++qtdAtual);
-
+        
     },
 
     // botão remover item do carrinho
@@ -282,6 +297,7 @@ cardapio.metodos = {
             $('#item-carrinho_' + id).remove();
 
             cardapio.metodos.atualizarBadgeTotal();  
+            cardapio.metodos.qtdItensCarrinho();
         }  
         
         if(MEU_CARRINHO.length == 0){
@@ -289,8 +305,8 @@ cardapio.metodos = {
         }
     },
 
-    // atualiza o carrinho com a quantidade atual
-    atualizarCarrinho: (id, qntd) =>{
+      // atualiza o carrinho com a quantidade atual
+    atualizarCarrinho: (id, qntd) => {
         let objIndex = MEU_CARRINHO.findIndex((obj) => {
             return obj.idCarrinho == id.split("_")[1]
         });
@@ -308,7 +324,7 @@ cardapio.metodos = {
 
     },
 
-    mostrarAcrescimos(id, mostrar){
+    mostrarAcrescimos(id, mostrar) {
         if(!mostrar){
             $('#ver-acrescimos-up-'+id).addClass('hidden');         
             $('#ver-acrescimos-down-'+id).removeClass('hidden');
