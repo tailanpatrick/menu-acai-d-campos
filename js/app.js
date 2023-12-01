@@ -71,7 +71,7 @@ cardapio.metodos = {
         cardapio.metodos.mensagem('Item adicionado ao carrinho', cor='green');
 
         cardapio.metodos.atualizarBadgeTotal();
-        cardapio.metodos.qtdItensCarrinho();
+        cardapio.metodos.atualizarQtdItensCarrinho();
         
     },
 
@@ -95,7 +95,8 @@ cardapio.metodos = {
         $('.badge-total-carrinho').html(total)
     },
 
-    qtdItensCarrinho: () =>{
+    // atualiza a quantidade de itens do carrinho na parte superior do carrinho
+    atualizarQtdItensCarrinho: () =>{
         const qtdItens = MEU_CARRINHO.length;
 
         $('#qtd-itens-carrinho').text(qtdItens);
@@ -297,7 +298,7 @@ cardapio.metodos = {
             $('#item-carrinho_' + id).remove();
 
             cardapio.metodos.atualizarBadgeTotal();  
-            cardapio.metodos.qtdItensCarrinho();
+            cardapio.metodos.atualizarQtdItensCarrinho();
         }  
         
         if(MEU_CARRINHO.length == 0){
