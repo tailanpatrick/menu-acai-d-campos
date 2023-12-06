@@ -258,9 +258,12 @@ cardapio.metodos = {
                 }
             });
 
+        cardapio.metodos.carregarValores();
+
         }
         else {
             cardapio.metodos.carrinhoVazio();
+            cardapio.metodos.carregarValores();
         }
     },
 
@@ -275,6 +278,8 @@ cardapio.metodos = {
         if (qtdAtual > 1){
             $('#qntd-carrinho_' + id).text(qtdAtual - 1);
             cardapio.metodos.atualizarCarrinho(id, --qtdAtual);
+        }else {
+            cardapio.metodos.removerItemCarrinho(id);
         }
         
     },
@@ -304,6 +309,7 @@ cardapio.metodos = {
         if(MEU_CARRINHO.length == 0){
             cardapio.metodos.carrinhoVazio();
         }
+        cardapio.metodos.carregarValores();
     },
 
       // atualiza o carrinho com a quantidade atual
@@ -315,13 +321,56 @@ cardapio.metodos = {
 
         // atualiza o carrinho com a quantidade atualizada
         cardapio.metodos.atualizarBadgeTotal();
+
+        // atualiza os valores (R$) totais do carrinho
+        cardapio.metodos.carregarValores();
     },
 
-    // Carrega os valores do Carrinho
+    // Carrega os valores de Total do Carrinho
     carregarValores: () => {
         VALOR_CARRINHO = 0;
 
         $('#lblValorTotal').text('R$ 0,00');
+
+        $.each(MEU_CARRINHO, (i, e) =>{
+            
+            VALOR_CARRINHO += parseFloat(e.price * e.qntd);
+
+            if ((i +1) == MEU_CARRINHO.length) {
+                $('#lblValorTotal').text(`R$ ${VALOR_CARRINHO.toFixed(2).replace('.', ',')}`);
+            }
+
+        });
+
+    },
+
+    // adiciona um acrescimo comum ao Açaí
+    adicionarOuRemoverAcrescimoComum:(idCarrinho, idAcrescimoComum) => {
+        acrescimoComum = ACRESCIMOS['acrescimos-comum'].find(acrescimo => idAcrescimoComum == acrescimo.id);
+
+        $.each(MEU_CARRINHO, function(index, item) {
+            if (item.idCarrinho == idCarrinho) {
+                // Verifica se o item já possui a propriedade acrescimosComuns
+                if (!item.hasOwnProperty('acrescimosComuns')) {
+                    Object.defineProperty(item, 'acrescimosComuns', {
+                        writable: true,
+                        enumerable: true,
+                        configurable: true
+                      });
+                      item.acrescimosComuns = [];
+                }
+
+                let acrescimoExistente = item.acrescimosComuns.find(acrescimo => acrescimo.id == acrescimoComum.id);
+
+                if(!acrescimoExistente){
+                    // Adiciona novos itens de acréscimosComuns aos itens antigos
+                    item.acrescimosComuns.push(acrescimoComum);
+                }else {
+                    item.acrescimosComuns = item.acrescimosComuns.filter(acrescimo => acrescimo !== acrescimoExistente);
+                }
+                return false; // Para de percorrer assim que encontrar o item
+            }
+        });
 
     },
 
@@ -499,7 +548,7 @@ cardapio.templates = {
 
     acrescimoComum: `
     <div class="acrescimo">
-        <input type="checkbox" id="\${id}_\${idCarrinho}">
+        <input type="checkbox" id="\${id}_\${idCarrinho}" onchange="cardapio.metodos.adicionarOuRemoverAcrescimoComum(\${idCarrinho}, '\${id}')">
         <label for="\${id}_\${idCarrinho}">\${nome}</label>
     </div>`,
     acrecimosEspecial:`
@@ -510,7 +559,7 @@ cardapio.templates = {
     
     sorvetes: `
     <div class="acrescimo">
-        <input type="checkbox" id="\${desc}_\${id}_\${idCarrinho}" onchange="cardapio.metodos.limitarCheckboxes(this)">
+        <input type="checkbox" id="\${desc}_\${id}_\${idCarrinho}" onchange="cardapio.metodos.limitarCheckboxes(this);">
         <label for="\${desc}_\${id}_\${idCarrinho}">\${nome}</label>
     </div>`,
     coberturas: `
