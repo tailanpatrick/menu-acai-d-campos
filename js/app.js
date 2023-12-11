@@ -365,14 +365,74 @@ cardapio.metodos = {
 
         $.each(MEU_CARRINHO, (i, e) => {
 
-            VALOR_CARRINHO += parseFloat(e.price * e.qntd);
+            let VALOR_ITEM = 0;
 
-            if ((i + 1) == MEU_CARRINHO.length) {
-                $('#lblValorTotal').text(`R$ ${VALOR_CARRINHO.toFixed(2).replace('.', ',')}`);
+            if (!e.id.includes('milk')){
+                
+                // se for acai de 1L
+                if (e.id.includes('1l')){
+                    VALOR_ITEM = parseFloat(e.price) + cardapio.metodos.calcularValorAcrescimoComum1L(e.acrescimosComuns) + cardapio.metodos.calcularValorAcrescimoEspecial(e.acrescimosEspeciais);
+                
+                // se for acai até 700ML
+                }else{
+                    VALOR_ITEM = parseFloat(e.price) + cardapio.metodos.calcularValorAcrescimoComum(e.acrescimosComuns) + cardapio.metodos.calcularValorAcrescimoEspecial(e.acrescimosEspeciais);
+                }
+
             }
 
+            // se for milkshake
+            else {
+                VALOR_ITEM = parseFloat(e.price);
+            }
+
+            // mostra valor do item
+            $('#preco_'+e.id+'_'+e.idCarrinho).text(`R$ ${VALOR_ITEM.toFixed(2).replace('.', ',')}`);
+
+            // atualiza valor do carrinho com valor do item * quantidade daquele item
+            VALOR_CARRINHO += parseFloat(VALOR_ITEM * e.qntd);
+
+            // mostra total do carrinho
+            if ((i + 1) == MEU_CARRINHO.length) {             
+                $('#lblValorTotal').text(`R$ ${VALOR_CARRINHO.toFixed(2).replace('.', ',')}`);
+                
+            }
+
+            // salva valor do item na memória
+            e.valorItem = VALOR_ITEM;
         });
 
+    },
+
+    calcularValorAcrescimoComum: (acrescimos) => {
+        let totalAcrescimoComum = 0;
+        // Verifica se há mais de 3 acrescimosComuns
+        if (acrescimos.length > 3) {
+            $.each(acrescimos.slice(3), (i, e) => {
+                // Calcula o valor dos acrescimosComuns além dos primeiros 3
+                totalAcrescimoComum += parseFloat(e.price);
+            });
+        }
+        return totalAcrescimoComum;
+    },
+
+    calcularValorAcrescimoComum1L: (acrescimos) => {
+        let totalAcrescimoComum = 0;
+        // Verifica se há mais de 6 acrescimosComuns
+        if (acrescimos.length > 6) {
+            $.each(acrescimos.slice(6), (i, e) => {
+                // Calcula o valor dos acrescimosComuns além dos primeiros 3
+                totalAcrescimoComum += parseFloat(e.price);
+            });
+        }
+        return totalAcrescimoComum;
+    },
+
+    calcularValorAcrescimoEspecial: (acrescimos) => {
+        let totalAcrescimoEspecial = 0;
+        $.each(acrescimos, (i, e) => {
+            totalAcrescimoEspecial += parseFloat(e.price);
+        });
+        return totalAcrescimoEspecial;
     },
 
     criarArraysDeAcrescimos:(i) => {
@@ -555,6 +615,16 @@ cardapio.metodos = {
     },
 
 
+    carregarEndereco: ()=>{
+        if (MEU_CARRINHO.length <= 0){
+            cardapio.metodos.mensagem('Seu carrinho esta vazio');
+            return;
+        }
+
+        cardapio.metodos.carregarEtapa(2);
+    },
+
+
     mensagem: (texto, cor = 'red', tempo = 3500) => {
 
         let id = Math.floor(Date.now() * Math.random()).toString();
@@ -615,7 +685,7 @@ cardapio.templates = {
             </div>
             <div class="dados-produtos">
                 <p class="title-produto"><b>\${nome}</b></p>
-                <p class="price-produto"><b>R$ \${preco}</b></p>
+                <p class="price-produto"><b  id="preco_\${id}_\${idCarrinho}">R$ \${preco}</b></p>
             </div>
             <div class="add-carrinho">
                 <button class="btn-purple btn-sm  ver-acrescimos hidden" id=ver-acrescimos-down-\${idCarrinho} onclick="cardapio.metodos.mostrarAcrescimos('\${idCarrinho}',true)">
@@ -660,7 +730,7 @@ cardapio.templates = {
             </div>
             <div class="dados-produtos">
                 <p class="title-produto"><b>\${nome}</b></p>
-                <p class="price-produto"><b>R$ \${preco}</b></p>
+                <p class="price-produto"><b id="preco_\${id}_\${idCarrinho}">R$ \${preco}</b></p>
             </div>
             <div class="add-carrinho">
                     <button class="btn-purple btn-sm  ver-acrescimos hidden" id=ver-acrescimos-down-\${idCarrinho} onclick="cardapio.metodos.mostrarAcrescimos('\${idCarrinho}',true)">
@@ -701,12 +771,12 @@ cardapio.templates = {
 
     acrescimoComum: `
     <div class="acrescimo">
-        <input type="checkbox" id="\${id}_\${idCarrinho}" onchange="cardapio.metodos.adicionarOuRemoverAcrescimoComum(\${idCarrinho}, '\${id}')">
+        <input type="checkbox" id="\${id}_\${idCarrinho}" onchange="cardapio.metodos.adicionarOuRemoverAcrescimoComum(\${idCarrinho}, '\${id}'); cardapio.metodos.carregarValores()">
         <label for="\${id}_\${idCarrinho}">\${nome}</label>
     </div>`,
     acrecimosEspecial: `
     <div class="acrescimo">
-        <input type="checkbox" id="\${id}_\${idCarrinho}" class="checkbox-custom" onchange="cardapio.metodos.adicionarOuRemoverAcrescimoEspecial(\${idCarrinho}, '\${id}')">
+        <input type="checkbox" id="\${id}_\${idCarrinho}" class="checkbox-custom" onchange="cardapio.metodos.adicionarOuRemoverAcrescimoEspecial(\${idCarrinho}, '\${id}'); cardapio.metodos.carregarValores()">
         <label for="\${id}_\${idCarrinho}" class="checkbox-custom-label">\${nome} <br>R$\${preco}</label>
     </div>`,
 
