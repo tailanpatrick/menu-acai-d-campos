@@ -195,6 +195,10 @@ cardapio.metodos = {
             $.each(MEU_CARRINHO, (i, e) => {
                 // se for milkshake
                 if (e.id.includes("milk")) {
+
+                    // chama método que verifica se Arrays de sorvetes e cobertura existem 
+                    cardapio.metodos.criarArrayDeSorvetesCoberturas(i);
+
                     let itemCarrinho = cardapio.templates.itemCarrinho2.replace(/\${img}/g, e.img)
                         .replace(/\${nome}/g, e.name)
                         .replace(/\${preco}/g, e.price.toFixed(2).replace('.', ','))
@@ -213,6 +217,10 @@ cardapio.metodos = {
                             .replace(/\${desc}/g, sorvete.desc);
 
                         $("#sorvetes_" + e.id + "_" + e.idCarrinho).append(sorvetes);
+
+                        if (MEU_CARRINHO[i].sorvetes.includes(sorvete)){
+                            cardapio.metodos.remarcarCheckboxesSorvetes(e.idCarrinho, sorvete.id);
+                        }
                     });
 
                     $.each(MILK_SHAKE['coberturas'], (idCobertura, cobertura) => {
@@ -223,31 +231,18 @@ cardapio.metodos = {
                             .replace(/\${desc}/g, cobertura.desc);
 
                         $("#coberturas_" + e.id + "_" + e.idCarrinho).append(coberturas);
+
+                        if (MEU_CARRINHO[i].coberturas.includes(cobertura)){
+                            cardapio.metodos.remarcarRadiosCoberturas(e.idCarrinho, cobertura.id);
+                        }
                     });
 
 
                     // se for Creme de Acaí ou Vitamina
                 } else {
 
-                    // Variável Booleana para saber se existem os arrays de acrescimo do açaí
-                    const naoExistemOsArrays = !MEU_CARRINHO[i].hasOwnProperty('acrescimosComuns') && !MEU_CARRINHO[i].hasOwnProperty('acrescimosEspeciais');
-
-                    if (naoExistemOsArrays) {
-                        Object.defineProperty(MEU_CARRINHO[i], 'acrescimosComuns', {
-                            writable: true,
-                            enumerable: true,
-                            configurable: true
-                        });
-
-                        Object.defineProperty(MEU_CARRINHO[i], 'acrescimosEspeciais', {
-                            writable: true,
-                            enumerable: true,
-                            configurable: true
-                        });
-
-                        MEU_CARRINHO[i].acrescimosComuns = [];
-                        MEU_CARRINHO[i].acrescimosEspeciais = [];
-                    }
+                    // chama método cria os Arrays de acrescimos 
+                    cardapio.metodos.criarArraysDeAcrescimos(i);
 
                     let itemCarrinho = cardapio.templates.itemCarrinho.replace(/\${img}/g, e.img)
                         .replace(/\${nome}/g, e.name)
@@ -257,10 +252,12 @@ cardapio.metodos = {
                         .replace(/\${idCarrinho}/g, e.idCarrinho);
 
                     $("#itensCarrinho").append(itemCarrinho);
+
                     if (e.id.includes("1l")) {
                         $('#p-' + e.idCarrinho).text('Pode selecionar até 6 que não havera alteração no preço total, acima de 6 será cobrado R$ 1.50 por cada acrescimo comum adicional:');
                     }
-                     // lista os acrescimos disponíveis para o item
+
+                    // lista os acrescimos comuns disponíveis para o item
                     $.each(ACRESCIMOS['acrescimos-comum'], (idAcrescimoComum, acrescimoComum) => {
                         let acrecimosComuns = cardapio.templates.acrescimoComum
                             .replace(/\${id}/g, acrescimoComum.id)
@@ -269,11 +266,13 @@ cardapio.metodos = {
 
                         $("#acrescimoComum_" + e.id + "_" + e.idCarrinho).append(acrecimosComuns);
 
+                        // remarcar checkbox de acrescimo comum
                         if (MEU_CARRINHO[i].acrescimosComuns.includes(acrescimoComum)){
-                            cardapio.metodos.remarcarCheckboxes(e.idCarrinho, acrescimoComum.id)
+                            cardapio.metodos.remarcarCheckboxesAcrescimos(e.idCarrinho, acrescimoComum.id)
                         }
                     });
 
+                    // lista os acrescimos especiais disponíveis para o item
                     $.each(ACRESCIMOS['acrescimos-especiais'], (idAcrescimoEspecial, acrescimoEspecial) => {
                         let acrecimosEspeciais = cardapio.templates.acrecimosEspecial
                             .replace(/\${id}/g, acrescimoEspecial.id)
@@ -283,20 +282,20 @@ cardapio.metodos = {
 
                         $("#acrescimoEspecial_" + e.id + "_" + e.idCarrinho).append(acrecimosEspeciais);
 
+                        // remarcar checkbox de acrescimo especial
                         if (MEU_CARRINHO[i].acrescimosEspeciais.includes(acrescimoEspecial)){
-                            cardapio.metodos.remarcarCheckboxes(e.idCarrinho, acrescimoEspecial.id);
+                            cardapio.metodos.remarcarCheckboxesAcrescimos(e.idCarrinho, acrescimoEspecial.id);
                         }
                     });
                 }
             });
 
-            cardapio.metodos.carregarValores();
-
         }
         else {
             cardapio.metodos.carrinhoVazio();
-            cardapio.metodos.carregarValores();
         }
+
+        cardapio.metodos.carregarValores();
     },
 
     // imprime o icone do carrinho vazio
@@ -376,23 +375,60 @@ cardapio.metodos = {
 
     },
 
+    criarArraysDeAcrescimos:(i) => {
+        // Variável Booleana para saber se existem os arrays de acrescimo do açaí
+        const naoExistemOsArrays = !MEU_CARRINHO[i].hasOwnProperty('acrescimosComuns') && !MEU_CARRINHO[i].hasOwnProperty('acrescimosEspeciais');
+
+        // se não existir os arrays cria os dois e inicializa vazio
+        if (naoExistemOsArrays) {
+            Object.defineProperty(MEU_CARRINHO[i], 'acrescimosComuns', {
+                writable: true,
+                enumerable: true,
+                configurable: true
+            });
+
+            Object.defineProperty(MEU_CARRINHO[i], 'acrescimosEspeciais', {
+                writable: true,
+                enumerable: true,
+                configurable: true
+            });
+
+            MEU_CARRINHO[i].acrescimosComuns = [];
+            MEU_CARRINHO[i].acrescimosEspeciais = [];
+        }
+    },
+
+    criarArrayDeSorvetesCoberturas:(i) => {
+        // Variável Booleana para saber se existem os arrays de acrescimo do açaí
+        const naoExistemOsArrays = !MEU_CARRINHO[i].hasOwnProperty('sorvetes') && !MEU_CARRINHO[i].hasOwnProperty('coberturas');
+
+        // se não existir os arrays cria os dois e inicializa vazio
+        if (naoExistemOsArrays) {
+            Object.defineProperty(MEU_CARRINHO[i], 'sorvetes', {
+                writable: true,
+                enumerable: true,
+                configurable: true
+            });
+
+            Object.defineProperty(MEU_CARRINHO[i], 'coberturas', {
+                writable: true,
+                enumerable: true,
+                configurable: true
+            });
+
+            MEU_CARRINHO[i].sorvetes = [];
+            MEU_CARRINHO[i].coberturas = [];
+        }
+    },
+
     // adiciona um acrescimo comum ao Açaí
     adicionarOuRemoverAcrescimoComum: (idCarrinho, idAcrescimoComum) => {
         acrescimoComum = ACRESCIMOS['acrescimos-comum'].find(acrescimo => idAcrescimoComum == acrescimo.id);
 
         $.each(MEU_CARRINHO, function (index, item) {
             if (item.idCarrinho == idCarrinho) {
-                // Verifica se o item já possui a propriedade acrescimosComuns
-                if (!item.hasOwnProperty('acrescimosComuns')) {
-                    Object.defineProperty(item, 'acrescimosComuns', {
-                        writable: true,
-                        enumerable: true,
-                        configurable: true
-                    });
-                    item.acrescimosComuns = [];
-                }
-
-                let acrescimoExistente = item.acrescimosComuns.find(acrescimo => acrescimo.id == acrescimoComum.id);
+                
+            let acrescimoExistente = item.acrescimosComuns.find(acrescimo => acrescimo.id == acrescimoComum.id);
 
                 if (!acrescimoExistente) {
                     // Adiciona novos itens de acréscimosComuns aos itens antigos
@@ -414,15 +450,6 @@ cardapio.metodos = {
 
         $.each(MEU_CARRINHO, function (index, item) {
             if (item.idCarrinho == idCarrinho) {
-                // Verifica se o item já possui a propriedade acrescimosComuns
-                if (!item.hasOwnProperty('acrescimosEspeciais')) {
-                    Object.defineProperty(item, 'acrescimosEspeciais', {
-                        writable: true,
-                        enumerable: true,
-                        configurable: true
-                    });
-                    item.acrescimosEspeciais = [];
-                }
 
                 let acrescimoExistente = item.acrescimosEspeciais.find(acrescimo => acrescimo.id == acrescimoEspecial.id);
 
@@ -439,9 +466,64 @@ cardapio.metodos = {
             }
         });     
     },
+
+    adicionarOuRemoverSorvete: (checkbox, idCarrinho, idSorvete) => {
+        sorveteEscolhido = MILK_SHAKE['sorvetes'].find(sorvete => idSorvete == sorvete.id);
+
+        $.each(MEU_CARRINHO, function (index, item) {
+            if (item.idCarrinho == idCarrinho) {
+                
+                let sorveteExistente = item.sorvetes.find(sorvete => sorveteEscolhido.id == sorvete.id);
+
+                if (!sorveteExistente && checkbox.checked) {
+                    // Adiciona novo item de sorvete aos itens antigos
+                    item.sorvetes.push(sorveteEscolhido);
+
+                } else {
+
+                    item.sorvetes = item.sorvetes.filter(sorvete => sorveteEscolhido !== sorvete);
+                }
+                return false; // Para de percorrer assim que encontrar o item
+            }
+        });     
+    },
+
+    adicionarOuRemoverCobertura: (checkbox, idCarrinho, idCobertura) => {
+        coberturaEscolhida = MILK_SHAKE['coberturas'].find(cobertura => idCobertura == cobertura.id);
+
+        $.each(MEU_CARRINHO, function (index, item) {
+            if (item.idCarrinho == idCarrinho) {
+                
+                
+                if (item.coberturas.length == 0) {
+                    // Adiciona novo item de sorvete aos itens antigos
+                    item.coberturas.push(coberturaEscolhida);
+                }
+                else {
+                    item.coberturas.push(coberturaEscolhida);
+                    item.coberturas.shift();
+                }
+               
+                return false; // Para de percorrer assim que encontrar o item
+            }
+        });     
+    },
     
-    remarcarCheckboxes: (idCarrinho, idAcrescimo) => {
+    remarcarCheckboxesAcrescimos: (idCarrinho, idAcrescimo) => {
         let checkbox =  $('#'+ idAcrescimo + '_' + idCarrinho);
+
+        checkbox.prop('checked', true);
+    },
+
+    remarcarRadiosCoberturas: (idCarrinho, idAcrescimo) => {
+        let checkbox =  $('#cobertura_'+ idAcrescimo + '_' + idCarrinho);
+
+        checkbox.prop('checked', true);
+    },
+
+    remarcarCheckboxesSorvetes: (idCarrinho, idAcrescimo) => {
+        let checkbox =  $('#sorvete_'+ idAcrescimo + '_' + idCarrinho);
+        
         checkbox.prop('checked', true);
     },
 
@@ -630,12 +712,12 @@ cardapio.templates = {
 
     sorvetes: `
     <div class="acrescimo">
-        <input type="checkbox" id="\${desc}_\${id}_\${idCarrinho}" onchange="cardapio.metodos.limitarCheckboxes(this);">
+        <input type="checkbox" id="\${desc}_\${id}_\${idCarrinho}" onchange="cardapio.metodos.limitarCheckboxes(this);cardapio.metodos.adicionarOuRemoverSorvete(this, \${idCarrinho}, '\${id}')">
         <label for="\${desc}_\${id}_\${idCarrinho}">\${nome}</label>
     </div>`,
     coberturas: `
     <div class="acrescimo">
-        <input type="radio" id="\${desc}_\${id}_\${idCarrinho}" name="\${desc}">
+        <input type="radio" id="\${desc}_\${id}_\${idCarrinho}" name="\${desc}" onchange="cardapio.metodos.adicionarOuRemoverCobertura(this, \${idCarrinho}, '\${id}')">
         <label for="\${desc}_\${id}_\${idCarrinho}">\${nome}</label>
     </div>`,
 
