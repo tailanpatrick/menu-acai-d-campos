@@ -778,7 +778,8 @@ select.form-control{
 }
 
 .img-produto-resumo img {
-    width: 90px;
+    width: 100px;
+    height: 88px;
     border-radius: 11px;
 }
 
@@ -798,7 +799,7 @@ select.form-control{
 
 .price-produto-resumo {
     color: var(--color-primary);
-    font-size: 16px;
+    font-size: 20px;
     margin-bottom: 0;
 }
 

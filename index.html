@@ -6,13 +6,13 @@
 
     <title>Acaí D' Campos: Faça seu pedido!</title>
     <!--- Define o ícone do site (favicon)-->
-    <link rel="shortcut icon" href="./img/favicon.ico" type="image/x-icon"/>
+    <link rel="shortcut icon" href="./img/favicon.ico" type="image/x-icon" />
 
-    <link rel="stylesheet" href="./css/bootstrap.min.css"/>
-    <link rel="stylesheet" href="./css/fontawesome.css"/>
-    <link rel="stylesheet" href="./css/animate.css"/>
-    <link rel="stylesheet" href="./css/main.css"/>
-    
+    <link rel="stylesheet" href="./css/bootstrap.min.css" />
+    <link rel="stylesheet" href="./css/fontawesome.css" />
+    <link rel="stylesheet" href="./css/animate.css" />
+    <link rel="stylesheet" href="./css/main.css" />
+
 </head>
 
 <body>
@@ -46,7 +46,7 @@
 
                     </ul>
                     <a class="btn btn-white btn-icon" onclick="cardapio.metodos.abrirCarrinho(true);">
-                       
+
                         Meu Carrinho <span class="icon">
                             <div class="container-total-carrinho badge-total-carrinho hidden">0</div>
                             <i class="fa fa-shopping-bag"></i>
@@ -119,16 +119,19 @@
                 </div>
 
                 <div class="col-12 container-menu">
-                    <a id="menu-acai-creme" class="btn btn-white btn-sm-2 mr-3 active" onclick="cardapio.metodos.obterItensCardapio('acai-creme')">
+                    <a id="menu-acai-creme" class="btn btn-white btn-sm-2 mr-3 active"
+                        onclick="cardapio.metodos.obterItensCardapio('acai-creme')">
                         <div class="icon-creme"></div> Creme de Açaí
 
                     </a>
-                    <a id="menu-acai-vitamina" class="btn btn-white btn-sm-2 mr-3" onclick="cardapio.metodos.obterItensCardapio('acai-vitamina')">
+                    <a id="menu-acai-vitamina" class="btn btn-white btn-sm-2 mr-3"
+                        onclick="cardapio.metodos.obterItensCardapio('acai-vitamina')">
                         <div class="icon-vitamina"></div> Vitamina de Açaí
 
                     </a>
 
-                    <a id="menu-milk-shake" class="btn btn-white btn-sm-2 mr-3 " onclick="cardapio.metodos.obterItensCardapio('milk-shake')">
+                    <a id="menu-milk-shake" class="btn btn-white btn-sm-2 mr-3 "
+                        onclick="cardapio.metodos.obterItensCardapio('milk-shake')">
                         <div class="icon-milkshake"></div> Milk-Shake
 
                     </a>
@@ -228,8 +231,8 @@
         <div class="m-body">
             <div class="container">
                 <div id="itensCarrinho" class="ml-0 mr-0 hidden">
-                    
-                    <!--AQUI-->
+
+                    <!--AQUI SERÃO GERADOS OS ITENS DO CARRINHO-->
 
 
                 </div>
@@ -238,8 +241,8 @@
                     <div class="col-4">
                         <div class="form-group container-cep">
                             <label>CEP:</label>
-                            <input id="txtCEP" type="text" class="form-control" />
-                            <a class="btn btn-purple btn-sm"><i class="fas fa-search"></i></a>
+                            <input id="txtCEP" type="text" class="form-control" onkeyup="cardapio.metodos.mascaraCep(event)" maxlength="9"/>
+                            <a class="btn btn-purple btn-sm"  onclick="cardapio.metodos.buscarCep()"><i class="fas fa-search"></i></a>
                         </div>
                     </div>
                     <div class="col-8"></div>
@@ -284,33 +287,7 @@
                             <label>UF:</label>
                             <select id="ddlUf" class="form-control">
                                 <option value="-1">...</option>
-                                <option value="AC">AC</option>
-                                <option value="AL">AL</option>
-                                <option value="AP">AP</option>
-                                <option value="AM">AM</option>
-                                <option value="BA">BA</option>
-                                <option value="CE">CE</option>
-                                <option value="DF">DF</option>
-                                <option value="ES">ES</option>
-                                <option value="GO">GO</option>
-                                <option value="MA">MA</option>
-                                <option value="MT">MT</option>
-                                <option value="MS">MS</option>
                                 <option value="MG">MG</option>
-                                <option value="PA">PA</option>
-                                <option value="PB">PB</option>
-                                <option value="PR">PR</option>
-                                <option value="PE">PE</option>
-                                <option value="PI">PI</option>
-                                <option value="RJ">RJ</option>
-                                <option value="RN">RN</option>
-                                <option value="RS">RS</option>
-                                <option value="RO">RO</option>
-                                <option value="RR">RR</option>
-                                <option value="SC">SC</option>
-                                <option value="SP">SP</option>
-                                <option value="SE">SE</option>
-                                <option value="TO">TO</option>
                             </select>
                         </div>
                     </div>
@@ -328,41 +305,8 @@
                     <div class="col-12">
                         <div class="row" id="listaItensResumo">
 
-                            <div class="col-12 item-carrinho resumo">
-                                <div class="img-produto-resumo">
-                                    <img
-                                        src="./img/cardapio/burguers/burger-au-poivre-kit-4-pack.3ca0e39b02db753304cd185638dad518.jpg">
-                                </div>
-                                <div class="dados-produtos">
+                            <!--AQUI SERÃO GERADOS OS ITENS DO CARRINHO JÁ PERSONALIZADOS EM FORMA DE RESUMO-->
 
-                                    <p class="title-produto-resumo">
-                                        <b>Nome Produto</b>
-                                    </p>
-
-                                    <p class="price-produto-resumo">
-                                        <b>R$ 100,00</b>
-                                    </p>
-                                    <div class="acrescimos-resumo">
-                                        Acrescimos:<br>
-                                        <div class="acrescimo">
-                                            <b>*</b>Leite em Pó
-                                        </div>
-                                        <div class="acrescimo">
-                                            <b>*</b>Morango
-                                        </div>
-                                        <div class="acrescimo">
-                                            <b>*</b>Kiwi
-                                        </div>
-
-                                    </div>
-
-                                </div>
-                                <p class="quantidade-produto-resumo">
-                                    x <b>3</b>
-                                </p>
-                            </div>
-
-                            
                         </div>
                     </div>
 
@@ -379,10 +323,10 @@
 
                         <div class="dados-produto">
                             <p class="texto-endereco">
-                                <b id="resumoEndereco">Rua teste, 200, bairro teste</b>
+                                <b id="resumoEndereco"></b>
                             </p>
                             <p class="cidade-endereco" id="cidadeEndereco">
-                                Cidade-SP / 14711-000
+                                
                             </p>
                         </div>
 
@@ -391,36 +335,38 @@
                 </div>
             </div>
         </div>
-    
 
-    <div class="m-footer">
-        <div class="container">
 
-            <div class="container-total text-right mb-4">
-                <p class="mb-0 texto-total">
-                    <span><b>Total (Sem taxa de Entrega): </b></span>
-                    <b><span class="valor-total" id="lblValorTotal">R$ 0,00</b></span>
-                </p>
+        <div class="m-footer">
+            <div class="container">
 
+                <div class="container-total text-right mb-4">
+                    <p class="mb-0 texto-total">
+                        <span><b>Total (Sem taxa de Entrega): </b></span>
+                        <b><span class="valor-total" id="lblValorTotal">R$ 0,00</b></span>
+                    </p>
+
+                </div>
+
+                <a onclick="cardapio.metodos.carregarEndereco();" class="btn btn-purple float-right hidden"
+                    id="btnEtapaPedido">
+                    Continuar
+                </a>
+
+                <a onclick="cardapio.metodos.resumoPedido()"  class="btn btn-purple float-right hidden"
+                    id="btnEtapaEndereco">
+                    Revisar Pedido
+                </a>
+
+                <a class="btn btn-purple float-right" id="btnEtapaResumo">
+                    Enviar Pedido
+                </a>
+
+                <a onclick="cardapio.metodos.voltarEtapa();" class="btn btn-white float-right mr-3" id="btnEtapaVoltar">
+                    Voltar
+                </a>
             </div>
-
-            <a onclick="cardapio.metodos.carregarEndereco();" class="btn btn-purple float-right hidden" id="btnEtapaPedido">
-                Continuar
-            </a>
-
-            <a onclick="cardapio.metodos.carregarEtapa(3);" class="btn btn-purple float-right hidden" id="btnEtapaEndereco">
-                Revisar Pedido
-            </a>
-
-            <a class="btn btn-purple float-right" id="btnEtapaResumo">
-                Enviar Pedido
-            </a>
-
-            <a onclick="cardapio.metodos.voltarEtapa();" class="btn btn-white float-right mr-3" id="btnEtapaVoltar">
-                Voltar
-            </a>
         </div>
-    </div>
     </div>
 
 
@@ -430,7 +376,7 @@
     <script type="text/javascript" src="./js/popper.min.js"></script>
     <script type="text/javascript" src="./js/dados.js"></script>
     <script type="text/javascript" src="./js/app.js"></script>
-    
+
 </body>
 
 </html>

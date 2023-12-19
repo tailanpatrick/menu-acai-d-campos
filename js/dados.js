@@ -165,7 +165,7 @@ var ACRESCIMOS = {
             "price": 2.50
         },
         {
-            "id": "gotas-cocolate",
+            "id": "gotas-chocolate",
             "name": "Gotas de Chocolate",
             "price": 1.50
         },
@@ -175,7 +175,7 @@ var ACRESCIMOS = {
             "price": 1.50
         },
         {
-            "id": "m&m",
+            "id": "mEm",
             "name": "M&M's",
             "price": 2.00
         },

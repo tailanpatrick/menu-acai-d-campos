@@ -8,6 +8,7 @@ $(document).ready(function () {
 var cardapio = {};
 
 var MEU_CARRINHO = [];
+var MEU_ENDERECO = null;
 var VALOR_CARRINHO = 0;
 
 let proximoIdCarrinho = 1;
@@ -137,7 +138,7 @@ cardapio.metodos = {
             $('#btnEtapaResumo').addClass('hidden');
             $('#btnEtapaVoltar').addClass('hidden');
             $('#container-itens-carrinho').removeClass('hidden');
-            
+
         }
         if (etapa == 2) {
             $('#lblTituloEtapa').text('Endereço de entrega: ');
@@ -218,7 +219,7 @@ cardapio.metodos = {
 
                         $("#sorvetes_" + e.id + "_" + e.idCarrinho).append(sorvetes);
 
-                        if (MEU_CARRINHO[i].sorvetes.includes(sorvete)){
+                        if (MEU_CARRINHO[i].sorvetes.includes(sorvete)) {
                             cardapio.metodos.remarcarCheckboxesSorvetes(e.idCarrinho, sorvete.id);
                         }
                     });
@@ -232,7 +233,7 @@ cardapio.metodos = {
 
                         $("#coberturas_" + e.id + "_" + e.idCarrinho).append(coberturas);
 
-                        if (MEU_CARRINHO[i].coberturas.includes(cobertura)){
+                        if (MEU_CARRINHO[i].coberturas.includes(cobertura)) {
                             cardapio.metodos.remarcarRadiosCoberturas(e.idCarrinho, cobertura.id);
                         }
                     });
@@ -254,7 +255,7 @@ cardapio.metodos = {
                     $("#itensCarrinho").append(itemCarrinho);
 
                     if (e.id.includes("1l")) {
-                        $('#p-' + e.idCarrinho).text('Pode selecionar até 6 que não havera alteração no preço total, acima de 6 será cobrado R$ 1.50 por cada acrescimo comum adicional:');
+                        $('#p-' + e.idCarrinho).text('Pode selecionar até 6 que não havera alteração no preço total, acima de 6 será cobrado R$ 1.50 por cada acréscimo comum adicional:');
                     }
 
                     // lista os acrescimos comuns disponíveis para o item
@@ -267,7 +268,7 @@ cardapio.metodos = {
                         $("#acrescimoComum_" + e.id + "_" + e.idCarrinho).append(acrecimosComuns);
 
                         // remarcar checkbox de acrescimo comum
-                        if (MEU_CARRINHO[i].acrescimosComuns.includes(acrescimoComum)){
+                        if (MEU_CARRINHO[i].acrescimosComuns.includes(acrescimoComum)) {
                             cardapio.metodos.remarcarCheckboxesAcrescimos(e.idCarrinho, acrescimoComum.id)
                         }
                     });
@@ -283,7 +284,7 @@ cardapio.metodos = {
                         $("#acrescimoEspecial_" + e.id + "_" + e.idCarrinho).append(acrecimosEspeciais);
 
                         // remarcar checkbox de acrescimo especial
-                        if (MEU_CARRINHO[i].acrescimosEspeciais.includes(acrescimoEspecial)){
+                        if (MEU_CARRINHO[i].acrescimosEspeciais.includes(acrescimoEspecial)) {
                             cardapio.metodos.remarcarCheckboxesAcrescimos(e.idCarrinho, acrescimoEspecial.id);
                         }
                     });
@@ -367,14 +368,14 @@ cardapio.metodos = {
 
             let VALOR_ITEM = 0;
 
-            if (!e.id.includes('milk')){
-                
+            if (!e.id.includes('milk')) {
+
                 // se for acai de 1L
-                if (e.id.includes('1l')){
+                if (e.id.includes('1l')) {
                     VALOR_ITEM = parseFloat(e.price) + cardapio.metodos.calcularValorAcrescimoComum1L(e.acrescimosComuns) + cardapio.metodos.calcularValorAcrescimoEspecial(e.acrescimosEspeciais);
-                
-                // se for acai até 700ML
-                }else{
+
+                    // se for acai até 700ML
+                } else {
                     VALOR_ITEM = parseFloat(e.price) + cardapio.metodos.calcularValorAcrescimoComum(e.acrescimosComuns) + cardapio.metodos.calcularValorAcrescimoEspecial(e.acrescimosEspeciais);
                 }
 
@@ -386,15 +387,15 @@ cardapio.metodos = {
             }
 
             // mostra valor do item
-            $('#preco_'+e.id+'_'+e.idCarrinho).text(`R$ ${VALOR_ITEM.toFixed(2).replace('.', ',')}`);
+            $('#preco_' + e.id + '_' + e.idCarrinho).text(`R$ ${VALOR_ITEM.toFixed(2).replace('.', ',')}`);
 
             // atualiza valor do carrinho com valor do item * quantidade daquele item
             VALOR_CARRINHO += parseFloat(VALOR_ITEM * e.qntd);
 
             // mostra total do carrinho
-            if ((i + 1) == MEU_CARRINHO.length) {             
+            if ((i + 1) == MEU_CARRINHO.length) {
                 $('#lblValorTotal').text(`R$ ${VALOR_CARRINHO.toFixed(2).replace('.', ',')}`);
-                
+
             }
 
             // salva valor do item na memória
@@ -408,7 +409,7 @@ cardapio.metodos = {
         // Verifica se há mais de 3 acrescimosComuns
         if (acrescimos.length > 3) {
             $.each(acrescimos.slice(3), (i, e) => {
-                // Calcula o valor dos acrescimosComuns além dos primeiros 3
+                // Calcula o valor dos acrescimosComuns a partir do terceiro acréscimo
                 totalAcrescimoComum += parseFloat(e.price);
             });
         }
@@ -435,7 +436,7 @@ cardapio.metodos = {
         return totalAcrescimoEspecial;
     },
 
-    criarArraysDeAcrescimos:(i) => {
+    criarArraysDeAcrescimos: (i) => {
         // Variável Booleana para saber se existem os arrays de acrescimo do açaí
         const naoExistemOsArrays = !MEU_CARRINHO[i].hasOwnProperty('acrescimosComuns') && !MEU_CARRINHO[i].hasOwnProperty('acrescimosEspeciais');
 
@@ -458,7 +459,7 @@ cardapio.metodos = {
         }
     },
 
-    criarArrayDeSorvetesCoberturas:(i) => {
+    criarArrayDeSorvetesCoberturas: (i) => {
         // Variável Booleana para saber se existem os arrays de acrescimo do açaí
         const naoExistemOsArrays = !MEU_CARRINHO[i].hasOwnProperty('sorvetes') && !MEU_CARRINHO[i].hasOwnProperty('coberturas');
 
@@ -487,8 +488,8 @@ cardapio.metodos = {
 
         $.each(MEU_CARRINHO, function (index, item) {
             if (item.idCarrinho == idCarrinho) {
-                
-            let acrescimoExistente = item.acrescimosComuns.find(acrescimo => acrescimo.id == acrescimoComum.id);
+
+                let acrescimoExistente = item.acrescimosComuns.find(acrescimo => acrescimo.id == acrescimoComum.id);
 
                 if (!acrescimoExistente) {
                     // Adiciona novos itens de acréscimosComuns aos itens antigos
@@ -501,12 +502,12 @@ cardapio.metodos = {
                 }
                 return false; // Para de percorrer assim que encontrar o item
             }
-        });     
+        });
     },
 
     // adiciona um acrescimo comum ao Açaí
     adicionarOuRemoverAcrescimoEspecial: (idCarrinho, idAcrescimoEspecial) => {
-        acrescimoEspecial= ACRESCIMOS['acrescimos-especiais'].find(acrescimo => idAcrescimoEspecial == acrescimo.id);
+        acrescimoEspecial = ACRESCIMOS['acrescimos-especiais'].find(acrescimo => idAcrescimoEspecial == acrescimo.id);
 
         $.each(MEU_CARRINHO, function (index, item) {
             if (item.idCarrinho == idCarrinho) {
@@ -524,7 +525,7 @@ cardapio.metodos = {
                 }
                 return false; // Para de percorrer assim que encontrar o item
             }
-        });     
+        });
     },
 
     adicionarOuRemoverSorvete: (checkbox, idCarrinho, idSorvete) => {
@@ -532,7 +533,7 @@ cardapio.metodos = {
 
         $.each(MEU_CARRINHO, function (index, item) {
             if (item.idCarrinho == idCarrinho) {
-                
+
                 let sorveteExistente = item.sorvetes.find(sorvete => sorveteEscolhido.id == sorvete.id);
 
                 if (!sorveteExistente && checkbox.checked) {
@@ -545,7 +546,7 @@ cardapio.metodos = {
                 }
                 return false; // Para de percorrer assim que encontrar o item
             }
-        });     
+        });
     },
 
     adicionarOuRemoverCobertura: (checkbox, idCarrinho, idCobertura) => {
@@ -553,8 +554,8 @@ cardapio.metodos = {
 
         $.each(MEU_CARRINHO, function (index, item) {
             if (item.idCarrinho == idCarrinho) {
-                
-                
+
+
                 if (item.coberturas.length == 0) {
                     // Adiciona novo item de sorvete aos itens antigos
                     item.coberturas.push(coberturaEscolhida);
@@ -563,27 +564,27 @@ cardapio.metodos = {
                     item.coberturas.push(coberturaEscolhida);
                     item.coberturas.shift();
                 }
-               
+
                 return false; // Para de percorrer assim que encontrar o item
             }
-        });     
+        });
     },
-    
+
     remarcarCheckboxesAcrescimos: (idCarrinho, idAcrescimo) => {
-        let checkbox =  $('#'+ idAcrescimo + '_' + idCarrinho);
+        let checkbox = $('#' + idAcrescimo + '_' + idCarrinho);
 
         checkbox.prop('checked', true);
     },
 
     remarcarRadiosCoberturas: (idCarrinho, idAcrescimo) => {
-        let checkbox =  $('#cobertura_'+ idAcrescimo + '_' + idCarrinho);
+        let checkbox = $('#cobertura_' + idAcrescimo + '_' + idCarrinho);
 
         checkbox.prop('checked', true);
     },
 
     remarcarCheckboxesSorvetes: (idCarrinho, idAcrescimo) => {
-        let checkbox =  $('#sorvete_'+ idAcrescimo + '_' + idCarrinho);
-        
+        let checkbox = $('#sorvete_' + idAcrescimo + '_' + idCarrinho);
+
         checkbox.prop('checked', true);
     },
 
@@ -615,15 +616,229 @@ cardapio.metodos = {
     },
 
 
-    carregarEndereco: ()=>{
-        if (MEU_CARRINHO.length <= 0){
+    carregarEndereco: () => {
+        if (MEU_CARRINHO.length <= 0) {
             cardapio.metodos.mensagem('Seu carrinho esta vazio');
             return;
         }
 
+        if (!cardapio.metodos.validarMilkShake()) return;
+
         cardapio.metodos.carregarEtapa(2);
     },
 
+    validarMilkShake: () => {
+        for (var i = 0; i < MEU_CARRINHO.length; i++) {
+            var milkshake = MEU_CARRINHO[i];
+            var sorvetesSelecionados = milkshake.sorvetes;
+    
+            if (milkshake.id.includes('milk') &&(!sorvetesSelecionados || sorvetesSelecionados.length === 0)) {
+                cardapio.metodos.mensagem('Selecione pelo menos um sabor de sorvete para o ' + milkshake.name);
+                return false;
+            }
+        }
+        return true;
+    },
+
+    // API viaCEP
+    buscarCep: () => {
+        var cep = $('#txtCEP').val().trim().replace(/\D/g, '');
+
+        if (cep != '') {
+
+            // expressão regular validadora de cep
+            var validaCep = /^[0-9]{8}$/;
+
+            if (validaCep.test(cep)) {
+
+                $.getJSON("https://viacep.com.br/ws/" + cep + "/json/?callback=?", function (dados) {
+
+                    if (!("erro" in dados)) {
+
+                        if (dados.uf == 'MG') {
+                            // atualizar os campos com os valores retornados
+                            $('#txtEndereco').val(dados.logradouro);
+                            $('#txtBairro').val(dados.bairro);
+                            $('#txtCidade').val(dados.localidade);
+                            $('#ddlUf').val(dados.uf);
+
+                            $('#txtNumero').focus();
+                        }
+                        else {
+                            cardapio.metodos.mensagem('Desculpe, no momento só atendemos em Minas Gerais.')
+                        }
+
+
+                    }
+                    else {
+                        cardapio.metodos.mensagem('CEP não encontrado. Se necessário preencha as informações manualmente.');
+
+                    }
+                })
+
+            }
+            else {
+                cardapio.metodos.mensagem('Formato do CEP inválido.');
+                $('#txtCEP').focus();
+            }
+
+        }
+
+        else {
+            cardapio.metodos.mensagem('Por favor, informe o CEP.')
+            $('#txtCEP').focus();
+        }
+    },
+
+    mascaraCep: (event) => {
+        let input = event.target;
+        const valor = input.value;
+
+
+        if (!valor) {
+            input.value = "";
+        }
+
+        input.value = valor.replace(/\D/g, '');
+        input.value = valor.replace(/(\d{5})(\d)/, '$1-$2');
+
+        if (input.value.length == 9) {
+            cardapio.metodos.buscarCep();
+        }
+    },
+
+    // validação antes de prosseguir para etapa 3
+    resumoPedido: () => {
+        let cep = $('#txtCEP').val().trim();
+        let endereco = $('#txtEndereco').val().trim();
+        let bairro = $('#txtBairro').val().trim();
+        let cidade = $('#txtCidade').val().trim();
+        let uf = $('#ddlUf').val().trim();
+        let numero = $('#txtNumero').val().trim();
+        let complemento = $('#txtComplemento').val().trim();
+
+        if (cep.length <= 0) {
+            cardapio.metodos.mensagem('Por favor informe o CEP. Caso não tenha coloque um número qualquer');
+            $('#txtCEP').focus();
+            return;
+        }
+
+        if (endereco.length <= 0) {
+            cardapio.metodos.mensagem('Por favor informe o Endereço.');
+            $('#txtEndereco').focus();
+            return;
+        }
+
+        if (bairro.length <= 0) {
+            cardapio.metodos.mensagem('Por favor informe o Bairro.');
+            $('#txtBairro').focus();
+            return;
+        }
+
+        if (cidade.length <= 0) {
+            cardapio.metodos.mensagem('Por favor informe a Cidade.');
+            $('#txtCidade').focus();
+            return;
+        }
+
+        if (uf == '-1') {
+            cardapio.metodos.mensagem('Por favor informe o Estado (UF).');
+            $('#ddlUf').focus();
+            return;
+        }
+
+        if (numero.length <= 0) {
+            cardapio.metodos.mensagem('Por favor informe o Número.');
+            $('#txtNumero').focus();
+            return;
+        }
+
+        MEU_ENDERECO = {
+            cep: cep,
+            endereco: endereco,
+            bairro: bairro,
+            cidade: cidade,
+            uf: uf,
+            numero: numero,
+            complemento: complemento
+        }
+
+        cardapio.metodos.carregarEtapa(3);
+        cardapio.metodos.carregarResumo();
+
+    },
+
+    carregarResumo: () => {
+        $('#listaItensResumo').html('');
+
+        $.each(MEU_CARRINHO, (i, e)=>{
+
+            if (!e.id.includes("milk")){
+                let itemCarrinhoResumo = cardapio.templates.acaiResumo.replace(/\${id}/g, e.id)
+                            .replace(/\${idCarrinho}/g, e.idCarrinho)
+                            .replace(/\${img}/g, e.img)
+                            .replace(/\${nome}/g, e.name)
+                            .replace(/\${preco}/g, e.valorItem.toFixed(2).replace('.', ','))
+                            .replace(/\${qntd}/g, e.qntd)
+                            .replace(/\${qtdAcrescimos}/g, cardapio.metodos.qtdTotalDeAcrescimosAcai(e));
+                            
+
+                $("#listaItensResumo").append(itemCarrinhoResumo);
+
+                $.each(e.acrescimosComuns, (indiceAcrescimo, acrescimo) => {
+
+                    let acrescimoComumResumo = cardapio.templates.acrescimosResumo.replace(/\${nome}/g, acrescimo.name);
+
+                    $('#acrescimosResumo_'+e.id+'_'+e.idCarrinho).append(acrescimoComumResumo);
+
+                });
+
+                $.each(e.acrescimosEspeciais, (indiceAcrescimo, acrescimo) => {
+
+                    let acrescimoEspecialResumo = cardapio.templates.acrescimosResumo.replace(/\${nome}/g, acrescimo.name);
+
+                    $('#acrescimosResumo_'+e.id+'_'+e.idCarrinho).append(acrescimoEspecialResumo);
+
+                });
+            }
+
+            else {
+                let itemCarrinhoResumo = cardapio.templates.milkShakeResumo.replace(/\${id}/g, e.id)
+                            .replace(/\${idCarrinho}/g, e.idCarrinho)
+                            .replace(/\${img}/g, e.img)
+                            .replace(/\${nome}/g, e.name)
+                            .replace(/\${preco}/g, e.valorItem.toFixed(2).replace('.', ','))
+                            .replace(/\${qntd}/g, e.qntd);
+                            
+
+                $("#listaItensResumo").append(itemCarrinhoResumo);
+
+                $.each(e.sorvetes, (indiceSorvete, sorvete) => {
+
+                    let sorvetesResumo = cardapio.templates.acrescimosResumo.replace(/\${nome}/g, sorvete.name);
+
+                    $('#sorvetesResumo_'+ e.id +'_'+ e.idCarrinho).append(sorvetesResumo);
+
+                });
+
+                $.each(e.coberturas, (indiceCobertura, cobertura) => {
+
+                    let coberturaResumo = cardapio.templates.acrescimosResumo.replace(/\${nome}/g, cobertura.name);
+
+                    $('#coberturaResumo_'+e.id+'_'+e.idCarrinho).append(coberturaResumo);
+
+                });
+            }
+        });
+
+        $('#resumoEndereco').html(`${MEU_ENDERECO.endereco}, ${MEU_ENDERECO.numero}, ${MEU_ENDERECO.bairro}`);
+
+        $('#cidadeEndereco').html(`${MEU_ENDERECO.cidade} - ${MEU_ENDERECO.uf} / ${MEU_ENDERECO.cep} ${MEU_ENDERECO.complemento}`)
+    },
+
+    qtdTotalDeAcrescimosAcai: (itemDeCarrinho) => {
+        return itemDeCarrinho.acrescimosComuns.length + itemDeCarrinho.acrescimosEspeciais.length;
+    },
 
     mensagem: (texto, cor = 'red', tempo = 3500) => {
 
@@ -705,7 +920,7 @@ cardapio.templates = {
         
         <div class="col-12 acrescimos animated bounceInDown" id="acrescimos-\${idCarrinho}">
                 <p class="title-produto"><b>Acrescimos Comuns</b></p>
-                <p id="p-\${idCarrinho}">Pode selecionar até 3 que não havera alteração no preço total, acima de 3 será cobrado R$ 1.50 por cada acrescimo comum adicional:</p>
+                <p id="p-\${idCarrinho}">Pode selecionar até 3 que não havera alteração no preço total, acima de 3 será cobrado R$ 1.50 por cada acréscimo comum adicional:</p>
 
                 <div id="acrescimoComum_\${id}_\${idCarrinho}" class="acrescimosComum">
 
@@ -785,10 +1000,74 @@ cardapio.templates = {
         <input type="checkbox" id="\${desc}_\${id}_\${idCarrinho}" onchange="cardapio.metodos.limitarCheckboxes(this);cardapio.metodos.adicionarOuRemoverSorvete(this, \${idCarrinho}, '\${id}')">
         <label for="\${desc}_\${id}_\${idCarrinho}">\${nome}</label>
     </div>`,
+
     coberturas: `
     <div class="acrescimo">
         <input type="radio" id="\${desc}_\${id}_\${idCarrinho}" name="\${desc}" onchange="cardapio.metodos.adicionarOuRemoverCobertura(this, \${idCarrinho}, '\${id}')">
         <label for="\${desc}_\${id}_\${idCarrinho}">\${nome}</label>
     </div>`,
+
+    acaiResumo: `
+        <div class="col-12 item-carrinho resumo" >
+            <div class="img-produto-resumo">
+                <img src="\${img}">
+            </div>
+            <div class="dados-produtos">
+
+                <p class="title-produto-resumo">
+                        <b>\${nome}</b>
+                </p>
+
+                <p class="price-produto-resumo">
+                    <b>R$\${preco}</b>
+                </p>
+                <div class="acrescimos-resumo" id="acrescimosResumo_\${id}_\${idCarrinho}">
+                    <b>Acréscimos (\${qtdAcrescimos}): </b>
+
+                </div>
+
+            </div>
+            <p class="quantidade-produto-resumo">
+                x <b>\${qntd}</b>
+            </p>
+        </div>
+    `,
+
+    milkShakeResumo: `
+        <div class="col-12 item-carrinho resumo" >
+            <div class="img-produto-resumo">
+                <img src="\${img}">
+            </div>
+            <div class="dados-produtos">
+
+                <p class="title-produto-resumo">
+                        <b>\${nome}</b>
+                </p>
+
+                <p class="price-produto-resumo">
+                    <b>R$\${preco}</b>
+                </p>
+                <div class="acrescimos-resumo" id="sorvetesResumo_\${id}_\${idCarrinho}">
+                    <b>Sorvetes: </b>
+
+                </div>
+
+                <div class="acrescimos-resumo" id="coberturaResumo_\${id}_\${idCarrinho}">
+                    <b>Cobertura: </b>
+
+                </div>
+
+            </div>
+            <p class="quantidade-produto-resumo">
+                x <b>\${qntd}</b>
+            </p>
+        </div>
+    `,
+
+    acrescimosResumo: `
+    <div class="acrescimo">
+        <b>*</b>\${nome}, 
+    </div>`
+
 
 }
