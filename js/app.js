@@ -1,3 +1,28 @@
+// Inicializa  proximoIdCarrinho com valor salvo no navegador ou o valor 1
+let proximoIdCarrinho =  1;
+
+function obterCarrinhoSalvo() {
+    let carrinho = JSON.parse(localStorage.getItem('meu_carrinho')) || [];
+    
+    // Obtém o último item adicionado
+    const ultimoItem = carrinho.length > 0 ? carrinho[carrinho.length - 1] : null;
+
+    // Obtém a expiração do último item
+    const ultimaExpiracao = ultimoItem ? ultimoItem.expiracao : null;
+
+    let carrinhoAtualizado = carrinho.filter(item => 
+        ultimaExpiracao > new Date().getTime()
+    );
+
+    localStorage.setItem('meu_carrinho', JSON.stringify(carrinhoAtualizado));
+
+    if(carrinhoAtualizado.length > 0){
+        proximoIdCarrinho = localStorage.getItem('proximo_id_carrinho') || 1;
+    }
+
+    return carrinhoAtualizado;
+}
+
 $(document).ready(function () {
     cardapio.eventos.init();
 
@@ -5,18 +30,23 @@ $(document).ready(function () {
 });
 
 
+
 var cardapio = {};
 
-var MEU_CARRINHO = [];
+// Inicializa MEU_CARRINHO com dados salvos no navegador ou uma lista vazia
+var MEU_CARRINHO = obterCarrinhoSalvo() || [];
+
 var MEU_ENDERECO = null;
 var VALOR_CARRINHO = 0;
 
-let proximoIdCarrinho = 1;
 
 cardapio.eventos = {
 
     init: () => {
         cardapio.metodos.obterItensCardapio();
+        cardapio.metodos.atualizarBadgeTotal();
+        cardapio.metodos.atualizarQtdItensCarrinho();
+        
     }
 }
 
@@ -66,6 +96,8 @@ cardapio.metodos = {
             proximoIdCarrinho++; // Incrementar o contador global
 
             itemCarrinho.qntd = qtd;
+
+            itemCarrinho.expiracao = new Date().getTime() + 45 * 60 * 1000;
             MEU_CARRINHO.push(itemCarrinho);
         }
 
@@ -73,7 +105,8 @@ cardapio.metodos = {
 
         cardapio.metodos.atualizarBadgeTotal();
         cardapio.metodos.atualizarQtdItensCarrinho();
-
+        localStorage.setItem('meu_carrinho', JSON.stringify(MEU_CARRINHO));
+        localStorage.setItem('proximo_id_carrinho', JSON.stringify(proximoIdCarrinho));
     },
 
     // atualiza o badge de totais dos botões "Meu Carrinho"
@@ -219,8 +252,9 @@ cardapio.metodos = {
 
                         $("#sorvetes_" + e.id + "_" + e.idCarrinho).append(sorvetes);
 
-                        if (MEU_CARRINHO[i].sorvetes.includes(sorvete)) {
+                        if (MEU_CARRINHO[i].sorvetes.some(obj => obj.id === sorvete.id)) {
                             cardapio.metodos.remarcarCheckboxesSorvetes(e.idCarrinho, sorvete.id);
+                            
                         }
                     });
 
@@ -233,7 +267,7 @@ cardapio.metodos = {
 
                         $("#coberturas_" + e.id + "_" + e.idCarrinho).append(coberturas);
 
-                        if (MEU_CARRINHO[i].coberturas.includes(cobertura)) {
+                        if (MEU_CARRINHO[i].coberturas.some(obj => obj.id === cobertura.id)) {
                             cardapio.metodos.remarcarRadiosCoberturas(e.idCarrinho, cobertura.id);
                         }
                     });
@@ -268,7 +302,7 @@ cardapio.metodos = {
                         $("#acrescimoComum_" + e.id + "_" + e.idCarrinho).append(acrecimosComuns);
 
                         // remarcar checkbox de acrescimo comum
-                        if (MEU_CARRINHO[i].acrescimosComuns.includes(acrescimoComum)) {
+                        if (MEU_CARRINHO[i].acrescimosComuns.some(obj => obj.id === acrescimoComum.id)) {
                             cardapio.metodos.remarcarCheckboxesAcrescimos(e.idCarrinho, acrescimoComum.id)
                         }
                     });
@@ -284,7 +318,7 @@ cardapio.metodos = {
                         $("#acrescimoEspecial_" + e.id + "_" + e.idCarrinho).append(acrecimosEspeciais);
 
                         // remarcar checkbox de acrescimo especial
-                        if (MEU_CARRINHO[i].acrescimosEspeciais.includes(acrescimoEspecial)) {
+                        if (MEU_CARRINHO[i].acrescimosEspeciais.some(obj => obj.id === acrescimoEspecial.id)) {
                             cardapio.metodos.remarcarCheckboxesAcrescimos(e.idCarrinho, acrescimoEspecial.id);
                         }
                     });
@@ -336,6 +370,7 @@ cardapio.metodos = {
 
             cardapio.metodos.atualizarBadgeTotal();
             cardapio.metodos.atualizarQtdItensCarrinho();
+            localStorage.setItem('meu_carrinho', JSON.stringify(MEU_CARRINHO));
         }
 
         if (MEU_CARRINHO.length == 0) {
@@ -356,6 +391,7 @@ cardapio.metodos = {
 
         // atualiza os valores (R$) totais do carrinho
         cardapio.metodos.carregarValores();
+
     },
 
     // Carrega os valores de Total do Carrinho
@@ -400,6 +436,8 @@ cardapio.metodos = {
 
             // salva valor do item na memória
             e.valorItem = VALOR_ITEM;
+
+            localStorage.setItem('meu_carrinho', JSON.stringify(MEU_CARRINHO));
         });
 
     },
@@ -547,6 +585,7 @@ cardapio.metodos = {
                 return false; // Para de percorrer assim que encontrar o item
             }
         });
+        localStorage.setItem('meu_carrinho', JSON.stringify(MEU_CARRINHO));
     },
 
     adicionarOuRemoverCobertura: (checkbox, idCarrinho, idCobertura) => {
@@ -568,6 +607,7 @@ cardapio.metodos = {
                 return false; // Para de percorrer assim que encontrar o item
             }
         });
+        localStorage.setItem('meu_carrinho', JSON.stringify(MEU_CARRINHO));
     },
 
     remarcarCheckboxesAcrescimos: (idCarrinho, idAcrescimo) => {
