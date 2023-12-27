@@ -1,22 +1,23 @@
+const CELULAR_EMPRESA = '553182903387';
 // Inicializa  proximoIdCarrinho com valor salvo no navegador ou o valor 1
-let proximoIdCarrinho =  1;
+let proximoIdCarrinho = 1;
 
 function obterCarrinhoSalvo() {
     let carrinho = JSON.parse(localStorage.getItem('meu_carrinho')) || [];
-    
+
     // Obtém o último item adicionado
     const ultimoItem = carrinho.length > 0 ? carrinho[carrinho.length - 1] : null;
 
     // Obtém a expiração do último item
     const ultimaExpiracao = ultimoItem ? ultimoItem.expiracao : null;
 
-    let carrinhoAtualizado = carrinho.filter(item => 
+    let carrinhoAtualizado = carrinho.filter(item =>
         ultimaExpiracao > new Date().getTime()
     );
 
     localStorage.setItem('meu_carrinho', JSON.stringify(carrinhoAtualizado));
 
-    if(carrinhoAtualizado.length > 0){
+    if (carrinhoAtualizado.length > 0) {
         proximoIdCarrinho = localStorage.getItem('proximo_id_carrinho') || 1;
     }
 
@@ -38,6 +39,8 @@ var MEU_CARRINHO = obterCarrinhoSalvo() || [];
 
 var MEU_ENDERECO = null;
 var VALOR_CARRINHO = 0;
+var MEU_NOME = null;
+
 
 
 cardapio.eventos = {
@@ -46,7 +49,8 @@ cardapio.eventos = {
         cardapio.metodos.obterItensCardapio();
         cardapio.metodos.atualizarBadgeTotal();
         cardapio.metodos.atualizarQtdItensCarrinho();
-        
+        cardapio.metodos.carregarBotaoWhatsap();
+
     }
 }
 
@@ -254,7 +258,7 @@ cardapio.metodos = {
 
                         if (MEU_CARRINHO[i].sorvetes.some(obj => obj.id === sorvete.id)) {
                             cardapio.metodos.remarcarCheckboxesSorvetes(e.idCarrinho, sorvete.id);
-                            
+
                         }
                     });
 
@@ -361,22 +365,31 @@ cardapio.metodos = {
     removerItemCarrinho: (id) => {
         const indice = MEU_CARRINHO.findIndex((item) => item.idCarrinho == id.split("_")[1]);
 
-        const confirmacao = confirm("Tem certeza que deseja remover este item?");
+        cardapio.metodos.animacaoeRemover(id, indice);
 
-        if (confirmacao) {
+    },
+    animacaoeRemover: (id, indice) => {
+        item = $('#item-carrinho_' + id);
+
+        // Adicione a classe de animação
+        item.addClass('animated fadeOutRight');
+
+        item.one('animationend', function () {
+            item.remove();
+
             MEU_CARRINHO.splice(indice, 1);
 
-            $('#item-carrinho_' + id).remove();
 
             cardapio.metodos.atualizarBadgeTotal();
             cardapio.metodos.atualizarQtdItensCarrinho();
             localStorage.setItem('meu_carrinho', JSON.stringify(MEU_CARRINHO));
-        }
 
-        if (MEU_CARRINHO.length == 0) {
-            cardapio.metodos.carrinhoVazio();
-        }
-        cardapio.metodos.carregarValores();
+
+            if (MEU_CARRINHO.length == 0) {
+                cardapio.metodos.carrinhoVazio();
+            }
+            cardapio.metodos.carregarValores();
+        });
     },
 
     // atualiza o carrinho com a quantidade atual
@@ -535,7 +548,7 @@ cardapio.metodos = {
 
                 } else {
 
-                    item.acrescimosComuns = item.acrescimosComuns.filter(acrescimo => acrescimo !== acrescimoExistente);
+                    item.acrescimosComuns = item.acrescimosComuns.filter(acrescimo => acrescimo.id !== acrescimoExistente.id);
 
                 }
                 return false; // Para de percorrer assim que encontrar o item
@@ -558,7 +571,7 @@ cardapio.metodos = {
 
                 } else {
 
-                    item.acrescimosEspeciais = item.acrescimosEspeciais.filter(acrescimo => acrescimo !== acrescimoExistente);
+                    item.acrescimosEspeciais = item.acrescimosEspeciais.filter(acrescimo => acrescimo.id !== acrescimoExistente.id);
 
                 }
                 return false; // Para de percorrer assim que encontrar o item
@@ -580,7 +593,7 @@ cardapio.metodos = {
 
                 } else {
 
-                    item.sorvetes = item.sorvetes.filter(sorvete => sorveteEscolhido !== sorvete);
+                    item.sorvetes = item.sorvetes.filter(sorvete => sorveteEscolhido.id !== sorvete.id);
                 }
                 return false; // Para de percorrer assim que encontrar o item
             }
@@ -671,8 +684,8 @@ cardapio.metodos = {
         for (var i = 0; i < MEU_CARRINHO.length; i++) {
             var milkshake = MEU_CARRINHO[i];
             var sorvetesSelecionados = milkshake.sorvetes;
-    
-            if (milkshake.id.includes('milk') &&(!sorvetesSelecionados || sorvetesSelecionados.length === 0)) {
+
+            if (milkshake.id.includes('milk') && (!sorvetesSelecionados || sorvetesSelecionados.length === 0)) {
                 cardapio.metodos.mensagem('Selecione pelo menos um sabor de sorvete para o ' + milkshake.name);
                 return false;
             }
@@ -749,6 +762,7 @@ cardapio.metodos = {
 
     // validação antes de prosseguir para etapa 3
     resumoPedido: () => {
+        let nome = $('#txtNome').val().trim();
         let cep = $('#txtCEP').val().trim();
         let endereco = $('#txtEndereco').val().trim();
         let bairro = $('#txtBairro').val().trim();
@@ -756,6 +770,12 @@ cardapio.metodos = {
         let uf = $('#ddlUf').val().trim();
         let numero = $('#txtNumero').val().trim();
         let complemento = $('#txtComplemento').val().trim();
+
+        if (nome.length <= 3) {
+            cardapio.metodos.mensagem('Por favor informe o Nome.');
+            $('#txtNome').focus();
+            return;
+        }
 
         if (cep.length <= 0) {
             cardapio.metodos.mensagem('Por favor informe o CEP. Caso não tenha coloque um número qualquer');
@@ -793,6 +813,8 @@ cardapio.metodos = {
             return;
         }
 
+        MEU_NOME = nome;
+
         MEU_ENDERECO = {
             cep: cep,
             endereco: endereco,
@@ -811,17 +833,17 @@ cardapio.metodos = {
     carregarResumo: () => {
         $('#listaItensResumo').html('');
 
-        $.each(MEU_CARRINHO, (i, e)=>{
+        $.each(MEU_CARRINHO, (i, e) => {
 
-            if (!e.id.includes("milk")){
+            if (!e.id.includes("milk")) {
                 let itemCarrinhoResumo = cardapio.templates.acaiResumo.replace(/\${id}/g, e.id)
-                            .replace(/\${idCarrinho}/g, e.idCarrinho)
-                            .replace(/\${img}/g, e.img)
-                            .replace(/\${nome}/g, e.name)
-                            .replace(/\${preco}/g, e.valorItem.toFixed(2).replace('.', ','))
-                            .replace(/\${qntd}/g, e.qntd)
-                            .replace(/\${qtdAcrescimos}/g, cardapio.metodos.qtdTotalDeAcrescimosAcai(e));
-                            
+                    .replace(/\${idCarrinho}/g, e.idCarrinho)
+                    .replace(/\${img}/g, e.img)
+                    .replace(/\${nome}/g, e.name)
+                    .replace(/\${preco}/g, e.valorItem.toFixed(2).replace('.', ','))
+                    .replace(/\${qntd}/g, e.qntd)
+                    .replace(/\${qtdAcrescimos}/g, cardapio.metodos.qtdTotalDeAcrescimosAcai(e));
+
 
                 $("#listaItensResumo").append(itemCarrinhoResumo);
 
@@ -829,7 +851,7 @@ cardapio.metodos = {
 
                     let acrescimoComumResumo = cardapio.templates.acrescimosResumo.replace(/\${nome}/g, acrescimo.name);
 
-                    $('#acrescimosResumo_'+e.id+'_'+e.idCarrinho).append(acrescimoComumResumo);
+                    $('#acrescimosResumo_' + e.id + '_' + e.idCarrinho).append(acrescimoComumResumo);
 
                 });
 
@@ -837,19 +859,19 @@ cardapio.metodos = {
 
                     let acrescimoEspecialResumo = cardapio.templates.acrescimosResumo.replace(/\${nome}/g, acrescimo.name);
 
-                    $('#acrescimosResumo_'+e.id+'_'+e.idCarrinho).append(acrescimoEspecialResumo);
+                    $('#acrescimosResumo_' + e.id + '_' + e.idCarrinho).append(acrescimoEspecialResumo);
 
                 });
             }
 
             else {
                 let itemCarrinhoResumo = cardapio.templates.milkShakeResumo.replace(/\${id}/g, e.id)
-                            .replace(/\${idCarrinho}/g, e.idCarrinho)
-                            .replace(/\${img}/g, e.img)
-                            .replace(/\${nome}/g, e.name)
-                            .replace(/\${preco}/g, e.valorItem.toFixed(2).replace('.', ','))
-                            .replace(/\${qntd}/g, e.qntd);
-                            
+                    .replace(/\${idCarrinho}/g, e.idCarrinho)
+                    .replace(/\${img}/g, e.img)
+                    .replace(/\${nome}/g, e.name)
+                    .replace(/\${preco}/g, e.valorItem.toFixed(2).replace('.', ','))
+                    .replace(/\${qntd}/g, e.qntd);
+
 
                 $("#listaItensResumo").append(itemCarrinhoResumo);
 
@@ -857,7 +879,7 @@ cardapio.metodos = {
 
                     let sorvetesResumo = cardapio.templates.acrescimosResumo.replace(/\${nome}/g, sorvete.name);
 
-                    $('#sorvetesResumo_'+ e.id +'_'+ e.idCarrinho).append(sorvetesResumo);
+                    $('#sorvetesResumo_' + e.id + '_' + e.idCarrinho).append(sorvetesResumo);
 
                 });
 
@@ -865,7 +887,7 @@ cardapio.metodos = {
 
                     let coberturaResumo = cardapio.templates.acrescimosResumo.replace(/\${nome}/g, cobertura.name);
 
-                    $('#coberturaResumo_'+e.id+'_'+e.idCarrinho).append(coberturaResumo);
+                    $('#coberturaResumo_' + e.id + '_' + e.idCarrinho).append(coberturaResumo);
 
                 });
             }
@@ -874,10 +896,126 @@ cardapio.metodos = {
         $('#resumoEndereco').html(`${MEU_ENDERECO.endereco}, ${MEU_ENDERECO.numero}, ${MEU_ENDERECO.bairro}`);
 
         $('#cidadeEndereco').html(`${MEU_ENDERECO.cidade} - ${MEU_ENDERECO.uf} / ${MEU_ENDERECO.cep} ${MEU_ENDERECO.complemento}`)
+
+        cardapio.metodos.finalizarPedido();
+    },
+
+    // Atualiza o link do botão de Whatsapp
+    finalizarPedido: () => {
+
+        if (MEU_CARRINHO.length > 0 && MEU_ENDERECO != null) {
+
+            var texto = `Olá, gostaria de fazer um pedido em nome de *${MEU_NOME}.*\n`;
+            texto += `*Já selecionei meu pedido pelo Cardápio Digital*`;
+            texto += `\n\n*Itens do pedido:*\${itens}`;
+            texto += '\n\n*Endereço de entrega:*';
+            texto += `\n${MEU_ENDERECO.endereco}, ${MEU_ENDERECO.numero}, ${MEU_ENDERECO.bairro}`;
+            texto += `\n${MEU_ENDERECO.cidade} - ${MEU_ENDERECO.uf} / ${MEU_ENDERECO.cep} ${MEU_ENDERECO.complemento}`;
+            texto += `\n\n*Total (sem entrega): R$ ${VALOR_CARRINHO.toFixed(2).replace('.', ',')}*`;
+
+            var itens = '';
+
+            $.each(MEU_CARRINHO, (i, e) => {
+
+                itens += `\n\n*${e.qntd}x ${e.name} ....... R$ ${e.valorItem.toFixed(2).replace('.', ',')}*\n`;
+
+
+                if (e.id.includes('milk')) {
+                    const sorvetes = e.sorvetes;
+                    const coberturas = e.coberturas
+
+
+                    itens += '\n    *Sorvete(s):*\n';
+
+                    $.each(sorvetes, (i, sorvete) => {
+                        const dots = cardapio.metodos.gerarPontos(sorvetes, sorvete);
+                        const formattedPrice = `R$ 0,00`;
+                        itens += `* ${sorvete.name} ${dots} ${formattedPrice}\n`;
+                    });
+
+                    itens += '\n    *Cobertura:*\n';
+
+                    maxLength = Math.max(...cobertura.map(item => item.name.length));
+                    $.each(coberturas, (i, cobertura) => {
+                        const dots = cardapio.metodos.gerarPontos(coberturas, cobertura);
+                        const formattedPrice = `R$ 0,00`;
+                        itens += `* ${cobertura.name} ${dots} ${formattedPrice}\n`;
+                    });
+                }
+                else {
+
+                    const acrescimosComuns = e.acrescimosComuns;
+
+                    if (acrescimosComuns.length > 0) {
+                        itens += '\n    *Acréscimos Comuns:*\n';
+
+                    }
+
+                    $.each(acrescimosComuns, (index, acrescimo) => {
+
+                        if (e.id.includes('1l')) {
+                            if (index < 6) {
+                                const dots = cardapio.metodos.gerarPontos(acrescimosComuns, acrescimo);
+                                const formattedPrice = `R$ 0,00`;
+                                itens += `* ${acrescimo.name} ${dots} ${formattedPrice}\n`;
+                            }
+                            else {
+                                const dots = cardapio.metodos.gerarPontos(acrescimosComuns, acrescimo);
+                                const formattedPrice = `R$ ${acrescimo.price.toFixed(2).replace('.', ",")}`;
+                                itens += `* ${acrescimo.name} ${dots} ${formattedPrice}\n`;
+                            }
+
+                        } else {
+                            if (index < 3) {
+                                const dots = cardapio.metodos.gerarPontos(acrescimosComuns, acrescimo);
+                                const formattedPrice = `R$ 0,00`;
+                                itens += `* ${acrescimo.name} ${dots} ${formattedPrice}\n`;
+                            }
+                            else {
+                                const dots = cardapio.metodos.gerarPontos(acrescimosComuns, acrescimo);
+                                const formattedPrice = `R$ ${acrescimo.price.toFixed(2).replace('.', ",")}`;
+                                itens += `* ${acrescimo.name} ${dots} ${formattedPrice}\n`;
+                            }
+                        }
+                    });
+
+
+                    const acrescimosEspeciais = e.acrescimosEspeciais;
+
+                    if (acrescimosEspeciais.length > 0) {
+                        itens += '\n    *Acréscimos Especiais:*\n';
+                    }
+                    $.each(acrescimosEspeciais, (i, acrescimo) => {
+                        const dots = cardapio.metodos.gerarPontos(acrescimosComuns, acrescimo);
+                        const formattedPrice = `R$ ${acrescimo.price.toFixed(2).replace('.', ",")}`;
+                        itens += `* ${acrescimo.name} ${dots} ${formattedPrice}\n`;
+                    });
+
+                    itens += `\n--------------------------------------------------`;
+                }
+
+                // ultimo item
+                if ((i + 1) == MEU_CARRINHO.length) {
+                    texto = texto.replace(/\${itens}/g, itens);
+
+
+                    let encode = encodeURIComponent(texto);
+                    let URL = `https://wa.me/${CELULAR_EMPRESA}?text=${encode}`;
+
+                    $('#btnEtapaResumo').attr('href', URL);
+                    console.log(texto);
+                }
+            });
+        }
+
     },
 
     qtdTotalDeAcrescimosAcai: (itemDeCarrinho) => {
         return itemDeCarrinho.acrescimosComuns.length + itemDeCarrinho.acrescimosEspeciais.length;
+    },
+
+    carregarBotaoWhatsap: () => {
+        $('.botao-whatsapp').attr('href', `https://wa.me/${CELULAR_EMPRESA}?text=Olá preciso de um pedido em específico, não disponível no Cardapio Digital.`)
     },
 
     mensagem: (texto, cor = 'red', tempo = 3500) => {
@@ -896,6 +1034,19 @@ cardapio.metodos = {
         }, tempo);
     },
 
+    animarBadgeTotal: () => {
+        let badge = $('.botao-carrinho');
+        badge.removeClass('animated bounceIn')
+        badge.addClass('animated rubberBand');
+
+
+        badge.on('animationend', function () {
+            badge.removeClass('animated rubberBand');
+
+        });
+
+    },
+
     limitarCheckboxes: (checkbox) => {
         var divAvo = checkbox.closest('.acrescimosComum');
 
@@ -904,15 +1055,30 @@ cardapio.metodos = {
         if (checkboxesNaDiv.length > 2) {
             checkbox.checked = false;
         }
+    },
+
+    gerarPontos: (adicionais, adicional) => {
+        let maxLength = Math.max(...adicionais.map(item => item.name.length));
+        const espacosEntrePontos = adicional.name.length <= 7 ? 2 : 1;
+        const dots = '-'.repeat((maxLength - adicional.name.length + espacosEntrePontos));
+        return dots;
+    },
+
+    titleize: (element) => {
+        var inputElement = element;
+        var words = inputElement.value.toLowerCase().split(" ");
+        for (var a = 0; a < words.length; a++) {
+            var w = words[a];
+            words[a] = w.charAt(0).toUpperCase() + w.slice(1);
+        }
+        inputElement.value = words.join(" ");
     }
-
-
 }
 
 
 cardapio.templates = {
     item: `
-    <div class="col-3 mb-3">
+    <div class="col-3 mb-3 wow fadeInUp">
         <div class="card card-item" id="\${id}">
             <div class="img-produto">
                 <img src="\${img}" />
@@ -924,7 +1090,7 @@ cardapio.templates = {
                 <b>R$ \${preco}</b>
             </p>
             <div class="add-carrinho">
-                <span class="btn-add d-flex justify-content-center align-items-center" title="Adicionar ao Carrinho" onclick="cardapio.metodos.adicionarAoCarrinho('\${id}')">
+                <span class="btn-add d-flex justify-content-center align-items-center" title="Adicionar ao Carrinho" onclick="cardapio.metodos.adicionarAoCarrinho('\${id}');cardapio.metodos.animarBadgeTotal()">
                 <i class="fas fa-shopping-bag"></i>
                 </span>
             </div>

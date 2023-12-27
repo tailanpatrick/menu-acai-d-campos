@@ -293,3 +293,47 @@ var MILK_SHAKE = {
     ]
 
 }
+
+// Remover comentario em produção
+
+function recarregarScript() {
+    // Obtenha o elemento script existente
+    var scriptElement = document.getElementById('dados');
+    var scriptElement2  = document.getElementById('appId');
+
+    if (scriptElement) {
+        // Remova o script do DOM
+        scriptElement.parentNode.removeChild(scriptElement);
+
+        // Crie um novo elemento script
+        var novoScript = document.createElement('script');
+
+        // Atribua o mesmo ID para garantir que o novo script seja reconhecido
+        novoScript.id = 'dados';
+
+        // Atribua o caminho do arquivo ao novo script
+        novoScript.src = './js/dados.js';
+
+        // Adicione o novo script ao final do corpo (ou ao local desejado)
+        document.body.appendChild(novoScript);
+        
+    } else {
+        //console.error('Script não encontrado.');
+    }
+}
+
+// Armazene o estado do console
+var consoleAberto = false;
+
+// Verifique regularmente se o console está aberto
+setInterval(function() {
+    if (window.outerWidth - window.innerWidth > 200 || window.outerHeight - window.innerHeight > 200) {
+        carregarDadosNovamente();
+
+    }
+}, 5000);
+
+function carregarDadosNovamente() {
+    recarregarScript();
+    //console.log('O console foi aberto..');
+}

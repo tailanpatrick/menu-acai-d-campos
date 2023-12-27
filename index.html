@@ -21,7 +21,7 @@
 
     </div>
 
-    <a class="botao-carrinho hidden" onclick="cardapio.metodos.abrirCarrinho(true);">
+    <a class="botao-carrinho animated bounceIn hidden" onclick="cardapio.metodos.abrirCarrinho(true);">
         <div class="badge-total-carrinho">0</div>
         <i class="fa fa-shopping-bag"></i>
     </a>
@@ -29,7 +29,7 @@
     <section class="header">
         <div class="container">
             <nav class="navbar navbar-expand-lg pl-0 pr-0">
-                <a class="navbar-brand" href="#">
+                <a class="navbar-brand wow zoomIn" href="#">
                     <img src="./img/logo.png" width="150" class="img-logo" />
                 </a>
                 <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavDropdown">
@@ -39,13 +39,13 @@
                 </button>
 
                 <div class="collapse navbar-collapse" id="#navbarNavDropdown">
-                    <ul class="navbar-nav ml-auto mr-auto">
+                    <ul class="navbar-nav ml-auto mr-auto wow zoomIn">
 
                         <li class="nav-item"><a href="#cardapio" class="nav-link"><b>Cardápio</b></a></li>
                         <li class="nav-item"><a href="#sobre" class="nav-link"><b>Sobre Nós</b></a></li>
 
                     </ul>
-                    <a class="btn btn-white btn-icon" onclick="cardapio.metodos.abrirCarrinho(true);">
+                    <a class="btn btn-white btn-icon wow zoomIn" onclick="cardapio.metodos.abrirCarrinho(true);">
 
                         Meu Carrinho <span class="icon">
                             <div class="container-total-carrinho badge-total-carrinho hidden">0</div>
@@ -62,22 +62,22 @@
             <div class="row">
                 <div class="col-6">
                     <div class="d-flex text-banner">
-                        <h1>
+                        <h1 class="wow fadeInLeft">
                             <b>Escolha seu <b class="color-primary">Acaí</b>, <b class="color-primary">Sorvete ou
                                     Milk-Shake</b> da forma que preferir.</b>
                         </h1>
-                        <p>
+                        <p class="wow fadeInLeft delay-02s">
                             Aproveite nosso cardápio! Escolha o que desejar e receba no conforto da sua casa.
                         </p>
-                        <div>
-                            <a class="btn btn-sm btn-white btn-social mt-4 mr-3" href="">
+                        <div class="wow fadeIn delay-05s">
+                            <a class="btn btn-sm btn-white btn-social mt-4 mr-3" href="https://www.instagram.com/acaidcampos" target="_blank">
                                 <i class="fab fa-instagram social-icon"
                                     data-tooltip="Veja nosso instagram @acaidcampos"></i>
                             </a>
-                            <a class="btn btn-sm btn-white btn-social mt-4 mr-3" href="">
+                            <a class="btn btn-sm btn-white btn-social mt-4 mr-3" href="https://www.google.com/maps/place/A%C3%A7a%C3%AD+D+Campos/@-19.8086065,-44.0033492,17z/data=!3m1!4b1!4m6!3m5!1s0xa68f72ac4f4109:0xe58e86716faa49e2!8m2!3d-19.8086116!4d-44.0007743!16s%2Fg%2F11t2fh7nst?entry=ttu" target="_blank">
                                 <i class="fas fab fa-map-marked-alt social-icon" data-tooltip="Onde Estamos "></i>
                             </a>
-                            <a class="btn btn-sm btn-white btn-social mt-4">
+                            <a class="btn btn-sm btn-white btn-social mt-4 botao-whatsapp" target="_blank">
                                 <i class="fab fa-whatsapp social-icon"
                                     data-tooltip="Chame no Whatsapp para um pedido em específico.."></i>
                             </a>
@@ -91,8 +91,8 @@
 
                 </div>
                 <div class="col-6">
-                    <div class="card-banner"></div>
-                    <div class="d-flex img-banner">
+                    <div class="card-banner wow fadeIn delay-02s"></div>
+                    <div class="d-flex img-banner wow fadeIn delay-03s">
                         <img src="./img/tigela-acai (1).png" alt="">
                     </div>
 
@@ -111,14 +111,14 @@
         <div class="container">
             <div class="row">
 
-                <div class="col-12 text-center mb-5">
+                <div class="col-12 text-center mb-5 wow fadeIn">
                     <span class="hint-title"><b>Cardápio</b></span>
                     <h1 class="title">
                         <b>Conheça o nosso cardápio</b>
                     </h1>
                 </div>
 
-                <div class="col-12 container-menu">
+                <div class="col-12 container-menu wow fadeInUp">
                     <a id="menu-acai-creme" class="btn btn-white btn-sm-2 mr-3 active"
                         onclick="cardapio.metodos.obterItensCardapio('acai-creme')">
                         <div class="icon-creme"></div> Creme de Açaí
@@ -149,7 +149,7 @@
 
     </section>
 
-    <section class="sobre" id="sobre">
+    <section class="sobre wow fadeInUp delay-05s" id="sobre">
         <div class="container">
             <div class="row">
                 <div class="col-5 text-center">
@@ -182,7 +182,7 @@
     <footer>
         <div class="container">
             <div class="row">
-                <div class="col-3 container-logo-footer">
+                <div class="col-3 container-logo-footer wow zoomIn">
                     <img class="logo-footer" src="./img/logo.png" alt="">
                 </div>
 
@@ -193,13 +193,13 @@
                 </div>
 
                 <div class="col-3 container-redes-footer">
-                    <a class="btn btn-sm btn-white btn-social mr-3" href="">
+                    <a class="btn btn-sm btn-white btn-social mr-3" href="https://www.instagram.com/acaidcampos" target="_blank">
                         <i class="fab fa-instagram social-icon" data-tooltip="Veja nosso instagram @acaidcampos"></i>
                     </a>
-                    <a class="btn btn-sm btn-white btn-social mr-3" href="">
+                    <a class="btn btn-sm btn-white btn-social mr-3" href="https://www.google.com/maps/place/A%C3%A7a%C3%AD+D+Campos/@-19.8086065,-44.0033492,17z/data=!3m1!4b1!4m6!3m5!1s0xa68f72ac4f4109:0xe58e86716faa49e2!8m2!3d-19.8086116!4d-44.0007743!16s%2Fg%2F11t2fh7nst?entry=ttu" target="_blank">
                         <i class="fas fab fa-map-marked-alt social-icon" data-tooltip="Onde Estamos "></i>
                     </a>
-                    <a class="btn btn-sm btn-white btn-social" href="">
+                    <a class="btn btn-sm btn-white btn-social botao-whatsapp" href="#" target="_blank">
                         <i class="fab fa-whatsapp social-icon"
                             data-tooltip="Chame no Whatsapp para um pedido em específico.."></i>
                     </a>
@@ -208,7 +208,7 @@
         </div>
     </footer>
 
-    <div class="modal-full hidden" id="modalCarrinho">
+    <div class="modal-full animated hidden" id="modalCarrinho">
         <div class="m-header">
             <div class="container">
                 <a class="btn btn-white btn-sm float-right" onclick="cardapio.metodos.abrirCarrinho(false)">Fechar</a>
@@ -230,17 +230,24 @@
 
         <div class="m-body">
             <div class="container">
-                <div id="itensCarrinho" class="ml-0 mr-0 hidden">
+                <div id="itensCarrinho" class="ml-0 mr-0 animated hidden">
 
                     <!--AQUI SERÃO GERADOS OS ITENS DO CARRINHO-->
 
 
                 </div>
 
-                <div id="localEntrega" class="row mr-0 ml-0 hidden">
+                <div id="localEntrega" class="row mr-0 ml-0 animated fadeIn hidden">
+                    <div class="col-10">
+                        <div class="form-group">
+                            <label for="txtNome">Seu Nome:</label>
+                            <input id="txtNome" type="text" class="form-control" onkeyup="cardapio.metodos.titleize(this)">
+                        </div>
+                    </div>
+
                     <div class="col-4">
                         <div class="form-group container-cep">
-                            <label>CEP:</label>
+                            <label for="txtCEP">CEP:</label>
                             <input id="txtCEP" type="text" class="form-control" onkeyup="cardapio.metodos.mascaraCep(event)" maxlength="9"/>
                             <a class="btn btn-purple btn-sm"  onclick="cardapio.metodos.buscarCep()"><i class="fas fa-search"></i></a>
                         </div>
@@ -249,42 +256,42 @@
 
                     <div class="col-6">
                         <div class="form-group">
-                            <label>Endereço:</label>
+                            <label for="txtEndereco">Endereço:</label>
                             <input id="txtEndereco" type="text" class="form-control">
                         </div>
                     </div>
 
                     <div class="col-4">
                         <div class="form-group">
-                            <label>Bairro:</label>
+                            <label for="txtBairro">Bairro:</label>
                             <input id="txtBairro" type="text" class="form-control">
                         </div>
                     </div>
 
                     <div class="col-2">
                         <div class="form-group">
-                            <label>Número:</label>
+                            <label for="txtNumero">Número:</label>
                             <input id="txtNumero" type="text" class="form-control">
                         </div>
                     </div>
 
                     <div class="col-6">
                         <div class="form-group">
-                            <label>Cidade:</label>
+                            <label for="txtCidade">Cidade:</label>
                             <input id="txtCidade" type="text" class="form-control">
                         </div>
                     </div>
 
                     <div class="col-4">
                         <div class="form-group">
-                            <label>Complemento:</label>
+                            <label for="txtComplemento">Complemento:</label>
                             <input id="txtComplemento" type="text" class="form-control">
                         </div>
                     </div>
 
                     <div class="col-2">
                         <div class="form-group">
-                            <label>UF:</label>
+                            <label for="ddlUf">UF:</label>
                             <select id="ddlUf" class="form-control">
                                 <option value="-1">...</option>
                                 <option value="MG">MG</option>
@@ -295,7 +302,7 @@
 
                 </div>
 
-                <div id="resumoCarrinho" class="row mr-0 ml-0 hidden">
+                <div id="resumoCarrinho" class="row mr-0 ml-0 animated fadeIn hidden">
                     <div class="col-12">
                         <p class="title-carrinho mt-4">
                             <b>Itens do pedido:</b>
@@ -358,7 +365,7 @@
                     Revisar Pedido
                 </a>
 
-                <a class="btn btn-purple float-right" id="btnEtapaResumo">
+                <a href="#" class="btn btn-purple float-right" id="btnEtapaResumo" target="_blank">
                     Enviar Pedido
                 </a>
 
@@ -374,8 +381,11 @@
     <script type="text/javascript" src="./js/modernizr-3.5.0.min.js"></script>
     <script type="text/javascript" src="./js/bootstrap.min.js"></script>
     <script type="text/javascript" src="./js/popper.min.js"></script>
-    <script type="text/javascript" src="./js/dados.js"></script>
-    <script type="text/javascript" src="./js/app.js"></script>
+    <script type="text/javascript" src="./js/wow.min.js"></script>
+    <script type="text/javascript" src="./js/dados.js" id="dados"></script>
+    <script type="text/javascript" src="./js/app.js" id="appId"></script>
+
+    <script>new WOW().init();</script>
 
 </body>
 
