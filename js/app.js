@@ -678,6 +678,7 @@ cardapio.metodos = {
         if (!cardapio.metodos.validarMilkShake()) return;
 
         cardapio.metodos.carregarEtapa(2);
+        $('#txtNome').focus()
     },
 
     validarMilkShake: () => {
@@ -986,7 +987,7 @@ cardapio.metodos = {
                         itens += '\n    *Acréscimos Especiais:*\n';
                     }
                     $.each(acrescimosEspeciais, (i, acrescimo) => {
-                        const dots = cardapio.metodos.gerarPontos(acrescimosComuns, acrescimo);
+                        const dots = cardapio.metodos.gerarPontos(acrescimosEspeciais, acrescimo);
                         const formattedPrice = `R$ ${acrescimo.price.toFixed(2).replace('.', ",")}`;
                         itens += `* ${acrescimo.name} ${dots} ${formattedPrice}\n`;
                     });
@@ -1003,7 +1004,7 @@ cardapio.metodos = {
                     let URL = `https://wa.me/${CELULAR_EMPRESA}?text=${encode}`;
 
                     $('#btnEtapaResumo').attr('href', URL);
-                    console.log(texto);
+                    
                 }
             });
         }
@@ -1078,7 +1079,7 @@ cardapio.metodos = {
 
 cardapio.templates = {
     item: `
-    <div class="col-3 mb-3 wow fadeInUp">
+    <div class="col-12 col-lg-3 col-md-3 col-sm-6 mb-3 wow fadeInUp">
         <div class="card card-item" id="\${id}">
             <div class="img-produto">
                 <img src="\${img}" />
@@ -1109,16 +1110,16 @@ cardapio.templates = {
                 <p class="price-produto"><b  id="preco_\${id}_\${idCarrinho}">R$ \${preco}</b></p>
             </div>
             <div class="add-carrinho">
-                <button class="btn-purple btn-sm  ver-acrescimos hidden" id=ver-acrescimos-down-\${idCarrinho} onclick="cardapio.metodos.mostrarAcrescimos('\${idCarrinho}',true)">
+                <button class="btn-purple btn-sm  ver-acrescimos hidden no-mobile" id=ver-acrescimos-down-\${idCarrinho} onclick="cardapio.metodos.mostrarAcrescimos('\${idCarrinho}',true)">
                     <i class="fas fa-arrow-down"></i>
                 </button>
-                <button class="btn-purple btn-sm ver-acrescimos" id=ver-acrescimos-up-\${idCarrinho}  onclick="cardapio.metodos.mostrarAcrescimos('\${idCarrinho}',false)">
+                <button class="btn-purple btn-sm ver-acrescimos no-mobile" id=ver-acrescimos-up-\${idCarrinho}  onclick="cardapio.metodos.mostrarAcrescimos('\${idCarrinho}',false)">
                     <i class="fas fa-arrow-up hd"></i> 
                 </button>
                 <span class="btn-menos" onclick="cardapio.metodos.diminuirQuantidadeCarrinho('\${id}_\${idCarrinho}')"><i class="fas fa-minus"></i></span>
                 <span class="add-numero-itens" id="qntd-carrinho_\${id}_\${idCarrinho}">\${qntd}</span>
                 <span class="btn-mais" onclick="cardapio.metodos.aumentarQuantidadeCarrinho('\${id}_\${idCarrinho}')"><i class="fas fa-plus"></i></span>
-                <span class="btn-remove" onclick="cardapio.metodos.removerItemCarrinho('\${id}_\${idCarrinho}')"><i class="fas fa-times"></i></span>
+                <span class="btn-remove no-mobile" onclick="cardapio.metodos.removerItemCarrinho('\${id}_\${idCarrinho}')"><i class="fas fa-times"></i></span>
 
             </div>
 
@@ -1154,16 +1155,16 @@ cardapio.templates = {
                 <p class="price-produto"><b id="preco_\${id}_\${idCarrinho}">R$ \${preco}</b></p>
             </div>
             <div class="add-carrinho">
-                    <button class="btn-purple btn-sm  ver-acrescimos hidden" id=ver-acrescimos-down-\${idCarrinho} onclick="cardapio.metodos.mostrarAcrescimos('\${idCarrinho}',true)">
-                    <i class="fas fa-arrow-down"></i>
+                    <button class="btn-purple btn-sm  ver-acrescimos hidden no-mobile" id=ver-acrescimos-down-\${idCarrinho} onclick="cardapio.metodos.mostrarAcrescimos('\${idCarrinho}',true)">
+                    <i class="fas fa-arrow-down no-mobile"></i>
                     </button>
-                    <button class="btn-purple btn-sm ver-acrescimos" id=ver-acrescimos-up-\${idCarrinho}  onclick="cardapio.metodos.mostrarAcrescimos('\${idCarrinho}',false)">
+                    <button class="btn-purple btn-sm ver-acrescimos no-mobile" id=ver-acrescimos-up-\${idCarrinho}  onclick="cardapio.metodos.mostrarAcrescimos('\${idCarrinho}',false)">
                     <i class="fas fa-arrow-up hd"></i> 
                 </button>
                 <span class="btn-menos" onclick="cardapio.metodos.diminuirQuantidadeCarrinho('\${id}_\${idCarrinho}')"><i class="fas fa-minus"></i></span>
                 <span class="add-numero-itens" id="qntd-carrinho_\${id}_\${idCarrinho}">\${qntd}</span>
                 <span class="btn-mais" onclick="cardapio.metodos.aumentarQuantidadeCarrinho('\${id}_\${idCarrinho}')"><i class="fas fa-plus"></i></span>
-                <span class="btn-remove" onclick="cardapio.metodos.removerItemCarrinho('\${id}_\${idCarrinho}')"><i class="fas fa-times"></i></span>
+                <span class="btn-remove no-mobile" onclick="cardapio.metodos.removerItemCarrinho('\${id}_\${idCarrinho}')"><i class="fas fa-times"></i></span>
 
             </div>
 

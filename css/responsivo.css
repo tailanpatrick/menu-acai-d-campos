@@ -1,0 +1,250 @@
+/* Tablets e Celulares (col-md) 0px a 767px */
+@media (max-width: 767px) {
+
+    .botao-carrinho {
+        right: 3%;
+        bottom: 5%;
+    }
+
+    .no-select {
+        -webkit-user-select:none;  
+        -moz-user-select:none;     
+        -ms-user-select:none;      
+        user-select:none;  
+    }
+
+    .no-mobile {
+        display: none !important;
+    }
+
+    .col-one {
+        padding-left: 35px !important;
+        padding-right: 20px !important;
+    }
+
+    .navbar-toggler-icon {
+        padding-top: 5px;
+    }
+
+    .navbar-collapse {
+        background-color: var(--color-primary-light);
+        padding: 20px;
+        text-align: center;
+        border-radius: 40px;
+    }
+
+    .navbar-collapse .btn-white {
+        margin-top: 20px;
+    }
+
+    .navbar-collapse .btn-icon {
+        padding-right: 20px;
+    }
+
+    .navbar-collapse .btn-icon span.icon {
+        display: none;
+
+    }
+
+    .banner {
+        padding-top: 50px;
+        padding-bottom: 30px;
+    }
+
+    .text-banner h1 {
+        font-size: 36px;
+    }
+
+    .text-banner p {
+        font-size: 18px;
+    }
+
+    .btn-purple,
+    .btn-white {
+        padding: 13px 23px;
+        font-size: 18px;
+    }
+
+    .cardapio {
+        padding-top: 10px;
+        padding-bottom: 10px !important;
+    }
+
+    .container-menu {
+        overflow-x: auto;
+        overflow-y: hidden;
+        display: flex;
+        margin: 2px;
+        padding: 2px;
+        padding-bottom: 20px;
+        margin-top: 20px;
+    }
+
+    .img-produto {
+        position: absolute;
+        left: 15px;
+    }
+
+    .card-item {
+        height: 110px;
+        padding-left: 110px;
+        justify-content: center;
+        align-items: start;
+    }
+
+    .card-item:hover .title-produto {
+        display: initial;
+        color: var(--color-white);
+    }
+
+    .card-item .img-produto img {
+        width: 80px;
+    }
+
+    .title-produto {
+        margin-top: 0px !important;
+        height: 30px !important;
+        text-align: left;
+
+    }
+
+    .price-produto {
+        margin-bottom: 0px !important;
+        margin-top: 0px !important;
+        font-size: 18px !important;
+    }
+
+    .card-item .add-carrinho {
+        margin: 0 150px;
+
+    }
+
+    .card-item .btn-add {
+        height: 50px !important;
+        width: 50px !important;
+        margin: 0 auto;
+        margin-bottom: -30px;
+    }
+
+    #itensCardapio {
+        margin-bottom: 0px !important;
+
+    }
+
+    #sobre {
+        margin: 0px !important;
+        padding-bottom: 100px !important;
+
+    }
+
+    footer {
+        height: 320px;
+        background-color: var(--color-primary-light);
+        padding: 10px;
+        overflow-y: hidden;
+    }
+
+    .container-logo-footer {
+        justify-content: center;
+        margin-bottom: 10px;
+    }
+
+    .container-texto-footer p {
+        text-align: center;
+    }
+
+    .container-redes-footer {
+        margin-top: 40px;
+        margin-bottom: 50px;
+        justify-content: center;
+    }
+
+    .modal-full {
+        padding: 15px;
+    }
+
+    .modal-full .item-carrinho {
+        padding-left: 0;
+        padding-right: 0;
+    }
+
+    .modal-full .img-produto {
+        position: relative;
+        left: 0;
+    }
+
+    .modal-full .img-produto {
+        width: 50px;
+    }
+
+    .modal-full .img-produto img {
+        width: 60px;
+        height: 60px;
+    }
+
+    .modal-full .dados-produto {
+        padding-left: 0px;
+        padding-right: 0px;
+        display: grid;
+    }
+
+    .modal-full .title-produto,
+    .modal-full .price-produto {
+        font-size: 16px !important;
+
+    }
+
+    .modal-full .add-numero-items {
+        padding: 0px 0px;
+    }
+
+
+    .modal-full .acrescimo label {    
+        font-size: 14px;
+        height: 80px;
+        width: 150px;
+        align-items: center;
+    
+    }
+
+    .modal-full .acrescimo label:before {
+        margin-right: 8px;
+        width: 23px;
+    }
+
+    .acrescimosComum,
+    .acrescimosEspecial {
+        display: grid;
+        grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+        /* Define o tamanho das colunas */
+    
+        /* Define o espaçamento entre os itens */
+        justify-content: center;
+        align-items: center;
+    }
+
+    .modal-full .form-control {
+        font-size: 16px;
+    }
+
+    .img-produto-resumo img {
+        width: 50px;
+        height: 50px;
+        position: absolute;
+        top:0;
+        margin-left: 20px;
+        margin-top: 10px;
+        margin-bottom: 10px;
+    }
+
+    .title-produto-resumo, .price-produto-resumo {
+        margin-left: 58px;
+    }
+
+    .title-produto.especial {
+        margin-top: 30px!important;
+        margin-bottom: 10px;
+    }
+
+
+}

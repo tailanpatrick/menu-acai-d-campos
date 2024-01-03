@@ -641,7 +641,7 @@ footer {
     font-size: 18px;
     border: 3px solid var(--color-primary);
     border-radius: 5px;
-    padding: 10px 20px;
+    padding: 10px 10px;
     display: flex;
     cursor: pointer;
     font-weight: bold;
@@ -935,4 +935,10 @@ select.form-control{
 
 .title-produto.coberturas {
     margin-top: 20px;
+}
+
+footer {
+    background-color: var(--color-primary-light);
+    padding: 10px;
+    overflow-y: hidden;
 }

@@ -3,14 +3,14 @@ var MENU = {
         {
             "id": "creme-300",
             "img": "./img/cardapio/creme/300ml.png",
-            "name": "Creme de Acaí 300ML",
+            "name": "Creme 300ML",
             "dsc": "Creme de Açaí 300ML",
             "price": 11.00
         },
         {
             "id": "creme-500",
             "img": "./img/cardapio/creme/500ml.png",
-            "name": "Creme de Açaí 500ML",
+            "name": "Creme 500ML",
             "dsc": "Creme de Acaí 500ML",
             "price": 13.00
         },
@@ -18,7 +18,7 @@ var MENU = {
         {
             "id": "creme-700",
             "img": "./img/cardapio/creme/700ml.png",
-            "name": "Creme de Açaí 700ML",
+            "name": "Creme 700ML",
             "dsc": "Creme de Açaí 700ML",
             "price": 15.00
         },
@@ -26,7 +26,7 @@ var MENU = {
         {
             "id": "creme-1l",
             "img": "./img/cardapio/creme/1L.png",
-            "name": "Creme de Acaí 1L",
+            "name": "Creme 1L",
             "dsc": "Creme de Açaí 1L",
             "price": 25.00
         }
@@ -36,7 +36,7 @@ var MENU = {
         {
             "id": "vitamina-300",
             "img": "./img/cardapio/vitamina/vitamina.png",
-            "name": "Vitamina de Açai 300ML",
+            "name": "Vitamina 300ML",
             "dsc": "Vitamina de Açai 300ML",
             "price": 6.00
         },
@@ -44,7 +44,7 @@ var MENU = {
         {
             "id": "vitamina-500",
             "img": "./img/cardapio/vitamina/vitamina.png",
-            "name": "Vitamina de Açai 500ML",
+            "name": "Vitamina 500ML",
             "dsc": "Vitamina de Açai 500ML",
             "price": 9.00
         },
@@ -52,7 +52,7 @@ var MENU = {
         {
             "id": "vitamina-700",
             "img": "./img/cardapio/vitamina/vitamina.png",
-            "name": "Vitamina de Açai 700ML",
+            "name": "Vitamina 700ML",
             "dsc": "Vitamina de Açai 700ML",
             "price": 12.00
         }
