@@ -1,7 +1,7 @@
 Cardápio Online desenvolvido para uma Açaíteria.
 Linguagens e tecnologias usadas: HTML5, CSS3, JavaScript, Jquery, Bootstrap, Animate, Wow.js.
 
-Após estudo do comercio local, foram aplicadas as regras de negócio da Açaíteria.
+Após estudo do comércio local, foram aplicadas as regras de negócio da Açaíteria.
 
 No cardápio o cliente da Açaíteria seleciona o Açaí ou Milk-Shake da forma que preferir, e após finalizar, gera uma mensagem formatada com os itens do pedido e informações de endereço do cliente ao Whatsapp da Açaíteria.
 
