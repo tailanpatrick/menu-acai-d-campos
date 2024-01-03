@@ -936,7 +936,7 @@ cardapio.metodos = {
 
                     itens += '\n    *Cobertura:*\n';
 
-                    maxLength = Math.max(...cobertura.map(item => item.name.length));
+                    maxLength = Math.max(...coberturas.map(item => item.name.length));
                     $.each(coberturas, (i, cobertura) => {
                         const dots = cardapio.metodos.gerarPontos(coberturas, cobertura);
                         const formattedPrice = `R$ 0,00`;
