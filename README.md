@@ -1,4 +1,4 @@
-Cardápio Online desenvolvido para uma Açaíteria.
+Cardápio Online desenvolvido para uma Açaíteria - Açaí D Campos.
 Linguagens e tecnologias usadas: HTML5, CSS3, JavaScript, Jquery, Bootstrap, Animate, Wow.js.
 
 Após estudo do comércio local, foram aplicadas as regras de negócio da Açaíteria.
