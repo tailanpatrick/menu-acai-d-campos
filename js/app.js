@@ -246,6 +246,17 @@ cardapio.metodos = {
 
                     $("#itensCarrinho").append(itemCarrinho);
 
+                    // deixar botão de menos com item de excluir se quantidade for 1
+                    let qtdAtual = parseInt($('#qntd-carrinho_' + e.id + '_' + e.idCarrinho).text());
+                    let icon = $('#icon-menos-' + e.id + '_' + e.idCarrinho);
+                    let btn = $('#btn-menos-' + e.id + '_' + e.idCarrinho);
+
+                    if (qtdAtual == 1) {
+                        icon.removeClass('fa-minus');
+                        icon.addClass('fa-times');
+                        btn.attr("style", "background-color: var(--color-red); border: var(--color-red);")
+                    }
+
                     // lista os sorvetes disponíveis para o item
                     $.each(MILK_SHAKE['sorvetes'], (idSorvete, sorvete) => {
                         let sorvetes = cardapio.templates.sorvetes
@@ -294,6 +305,17 @@ cardapio.metodos = {
 
                     if (e.id.includes("1l")) {
                         $('#p-' + e.idCarrinho).text('Pode selecionar até 6 que não havera alteração no preço total, acima de 6 será cobrado R$ 1.50 por cada acréscimo comum adicional:');
+                    }
+
+                    // deixar botão de menos com item de excluir se quantidade for 1
+                    let qtdAtual = parseInt($('#qntd-carrinho_' + e.id + '_' + e.idCarrinho).text());
+                    let icon = $('#icon-menos-' + e.id + '_' + e.idCarrinho);
+                    let btn = $('#btn-menos-' + e.id + '_' + e.idCarrinho);
+
+                    if (qtdAtual == 1) {
+                        icon.removeClass('fa-minus');
+                        icon.addClass('fa-times');
+                        btn.attr("style", "background-color: var(--color-red); border: var(--color-red);")
                     }
 
                     // lista os acrescimos comuns disponíveis para o item
@@ -345,11 +367,28 @@ cardapio.metodos = {
     // diminuir quantidade do item no carrinho
     diminuirQuantidadeCarrinho: (id) => {
         let qtdAtual = parseInt($('#qntd-carrinho_' + id).text());
+
         if (qtdAtual > 1) {
             $('#qntd-carrinho_' + id).text(qtdAtual - 1);
             cardapio.metodos.atualizarCarrinho(id, --qtdAtual);
-        } else {
+        }
+
+        else {
             cardapio.metodos.removerItemCarrinho(id);
+        }
+
+        let icon = $('#icon-menos-' + id);
+        let btn = $('#btn-menos-' + id);
+
+
+        if (qtdAtual == 1) {
+            icon.removeClass('fa-minus');
+            icon.addClass('fa-times');
+            btn.attr("style", "background-color: var(--color-red); border: var(--color-red);")
+        } else {
+            icon.addClass('fa-minus');
+            icon.removeClass('fa-times');
+            btn.attr("style", "background-color: var(--color-secondary); border: var(--color-secondary);")
         }
 
     },
@@ -359,6 +398,19 @@ cardapio.metodos = {
         $('#qntd-carrinho_' + id).html(qtdAtual + 1);
         cardapio.metodos.atualizarCarrinho(id, ++qtdAtual);
 
+        let icon = $('#icon-menos-' + id);
+        let btn = $('#btn-menos-' + id);
+
+
+        if (qtdAtual == 1) {
+            icon.removeClass('fa-minus');
+            icon.addClass('fa-times');
+            btn.attr("style", "background-color: var(--color-red); border: var(--color-red);")
+        } else {
+            icon.addClass('fa-minus');
+            icon.removeClass('fa-times');
+            btn.attr("style", "background-color: var(--color-secondary); border: var(--color-secondary);")
+        }
     },
 
     // botão remover item do carrinho
@@ -609,7 +661,7 @@ cardapio.metodos = {
 
 
                 if (item.coberturas.length == 0) {
-                    // Adiciona novo item de sorvete aos itens antigos
+
                     item.coberturas.push(coberturaEscolhida);
                 }
                 else {
@@ -912,7 +964,7 @@ cardapio.metodos = {
             texto += '\n\n*Endereço de entrega:*';
             texto += `\n${MEU_ENDERECO.endereco}, ${MEU_ENDERECO.numero}, ${MEU_ENDERECO.bairro}`;
             texto += `\n${MEU_ENDERECO.cidade} - ${MEU_ENDERECO.uf} / ${MEU_ENDERECO.cep} ${MEU_ENDERECO.complemento}`;
-            texto += `\n\n*Total (sem entrega): R$ ${VALOR_CARRINHO.toFixed(2).replace('.', ',')}*`;
+            texto += `\n\n*Total (Sem taxa de Entrega): R$ ${VALOR_CARRINHO.toFixed(2).replace('.', ',')}*`;
 
             var itens = '';
 
@@ -1004,7 +1056,7 @@ cardapio.metodos = {
                     let URL = `https://wa.me/${CELULAR_EMPRESA}?text=${encode}`;
 
                     $('#btnEtapaResumo').attr('href', URL);
-                    
+
                 }
             });
         }
@@ -1116,7 +1168,7 @@ cardapio.templates = {
                 <button class="btn-purple btn-sm ver-acrescimos no-mobile" id=ver-acrescimos-up-\${idCarrinho}  onclick="cardapio.metodos.mostrarAcrescimos('\${idCarrinho}',false)">
                     <i class="fas fa-arrow-up hd"></i> 
                 </button>
-                <span class="btn-menos" onclick="cardapio.metodos.diminuirQuantidadeCarrinho('\${id}_\${idCarrinho}')"><i class="fas fa-minus"></i></span>
+                <span class="btn-menos" id="btn-menos-\${id}_\${idCarrinho}" onclick="cardapio.metodos.diminuirQuantidadeCarrinho('\${id}_\${idCarrinho}')"><i class="fas fa-minus" id="icon-menos-\${id}_\${idCarrinho}"></i></span>
                 <span class="add-numero-itens" id="qntd-carrinho_\${id}_\${idCarrinho}">\${qntd}</span>
                 <span class="btn-mais" onclick="cardapio.metodos.aumentarQuantidadeCarrinho('\${id}_\${idCarrinho}')"><i class="fas fa-plus"></i></span>
                 <span class="btn-remove no-mobile" onclick="cardapio.metodos.removerItemCarrinho('\${id}_\${idCarrinho}')"><i class="fas fa-times"></i></span>
@@ -1161,7 +1213,7 @@ cardapio.templates = {
                     <button class="btn-purple btn-sm ver-acrescimos no-mobile" id=ver-acrescimos-up-\${idCarrinho}  onclick="cardapio.metodos.mostrarAcrescimos('\${idCarrinho}',false)">
                     <i class="fas fa-arrow-up hd"></i> 
                 </button>
-                <span class="btn-menos" onclick="cardapio.metodos.diminuirQuantidadeCarrinho('\${id}_\${idCarrinho}')"><i class="fas fa-minus"></i></span>
+                <span class="btn-menos" id="btn-menos-\${id}_\${idCarrinho}" onclick="cardapio.metodos.diminuirQuantidadeCarrinho('\${id}_\${idCarrinho}')"><i class="fas fa-minus" id="icon-menos-\${id}_\${idCarrinho}"></i></span>
                 <span class="add-numero-itens" id="qntd-carrinho_\${id}_\${idCarrinho}">\${qntd}</span>
                 <span class="btn-mais" onclick="cardapio.metodos.aumentarQuantidadeCarrinho('\${id}_\${idCarrinho}')"><i class="fas fa-plus"></i></span>
                 <span class="btn-remove no-mobile" onclick="cardapio.metodos.removerItemCarrinho('\${id}_\${idCarrinho}')"><i class="fas fa-times"></i></span>
