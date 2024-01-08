@@ -1,4 +1,7 @@
 const CELULAR_EMPRESA = '553182903387';
+const LOJA_ABRE = 16;
+const LOJA_FECHA  = 22;
+
 // Inicializa  proximoIdCarrinho com valor salvo no navegador ou o valor 1
 let proximoIdCarrinho = 1;
 
@@ -31,6 +34,14 @@ $(document).ready(function () {
 });
 
 
+// Mostrar mensagem de loja aberta ou fechada
+document.addEventListener("visibilitychange", function() {
+    if(!document.hidden){
+        cardapio.metodos.lojaAbertaOuFechada();
+    } 
+});
+
+
 
 var cardapio = {};
 
@@ -50,6 +61,7 @@ cardapio.eventos = {
         cardapio.metodos.atualizarBadgeTotal();
         cardapio.metodos.atualizarQtdItensCarrinho();
         cardapio.metodos.carregarBotaoWhatsap();
+        cardapio.metodos.lojaAbertaOuFechada();
 
     }
 }
@@ -175,6 +187,7 @@ cardapio.metodos = {
             $('#btnEtapaResumo').addClass('hidden');
             $('#btnEtapaVoltar').addClass('hidden');
             $('#container-itens-carrinho').removeClass('hidden');
+            $('#btnSairCarrinho').removeClass('hidden');
 
         }
         if (etapa == 2) {
@@ -192,6 +205,7 @@ cardapio.metodos = {
             $('#btnEtapaResumo').addClass('hidden');
             $('#btnEtapaVoltar').removeClass('hidden');
             $('#container-itens-carrinho').addClass('hidden');
+            $('#btnSairCarrinho').addClass('hidden');
         }
         if (etapa == 3) {
             $('#lblTituloEtapa').text('Resumo do pedido: ');
@@ -209,6 +223,7 @@ cardapio.metodos = {
             $('#btnEtapaResumo').removeClass('hidden');
             $('#btnEtapaVoltar').removeClass('hidden');
             $('#container-itens-carrinho').removeClass('hidden');
+            $('#btnSairCarrinho').addClass('hidden');
         }
     },
 
@@ -1125,6 +1140,38 @@ cardapio.metodos = {
             words[a] = w.charAt(0).toUpperCase() + w.slice(1);
         }
         inputElement.value = words.join(" ");
+    },
+
+    obterHoraDecimal:() => {
+        var dataAtual = new Date();
+        var horas = dataAtual.getHours();
+        var minutos = dataAtual.getMinutes();
+    
+        var horaDecimal = horas + minutos / 60;
+    
+        return horaDecimal;
+    },
+    
+    lojaAbertaOuFechada:() => {
+        let hora = cardapio.metodos.obterHoraDecimal();
+        let dia = new Date().getDay();
+
+        $('#container-mensagens').html(''); 
+
+
+        if((hora < LOJA_ABRE || hora >= LOJA_FECHA) || dia == 1 ){
+            
+            cardapio.metodos.mensagem(`Loja Fechada`, cor="red", tempo=10 * 60 * 1000);
+            cardapio.metodos.mensagem(`Abrimos (Ter à Dom) às ${LOJA_ABRE.toFixed(2).replace(".", ":")} hrs.`, cor="red", tempo=15000);
+
+            if(hora >= (LOJA_ABRE - 1) && dia != 1 ) {
+                cardapio.metodos.mensagem(`Agende seu pedido`, cor="green", tempo=20000);
+            }
+            
+        }
+        else {
+            cardapio.metodos.mensagem("Loja aberta, faça seu pedido!", cor='green', tempo=6000);
+        }
     }
 }
 
