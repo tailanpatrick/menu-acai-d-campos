@@ -973,8 +973,9 @@ cardapio.metodos = {
 
         if (MEU_CARRINHO.length > 0 && MEU_ENDERECO != null) {
 
-            var texto = `Olá, gostaria de fazer um pedido em nome de *${MEU_NOME}.*\n`;
-            texto += `*Já selecionei meu pedido pelo Cardápio Digital*`;
+            var texto = `Olá, gostaria de fazer um pedido!\n\n`;
+            texto += `Nome: *${MEU_NOME}*\n\n`
+            texto += `*Já selecionei meu pedido pelo Cardápio Digital:*`;
             texto += `\n\n*Itens do pedido:*\${itens}`;
             texto += '\n\n*Endereço de entrega:*';
             texto += `\n${MEU_ENDERECO.endereco}, ${MEU_ENDERECO.numero}, ${MEU_ENDERECO.bairro}`;
@@ -982,6 +983,7 @@ cardapio.metodos = {
             texto += `\n\n*Total (Sem taxa de Entrega): R$ ${VALOR_CARRINHO.toFixed(2).replace('.', ',')}*`;
 
             var itens = '';
+            
 
             $.each(MEU_CARRINHO, (i, e) => {
 
@@ -1009,6 +1011,8 @@ cardapio.metodos = {
                         const formattedPrice = `R$ 0,00`;
                         itens += `* ${cobertura.name} ${dots} ${formattedPrice}\n`;
                     });
+
+                    itens += `\n--------------------------------------\n`;
                 }
                 else {
 
@@ -1059,19 +1063,19 @@ cardapio.metodos = {
                         itens += `* ${acrescimo.name} ${dots} ${formattedPrice}\n`;
                     });
 
-                    itens += `\n--------------------------------------------------`;
+                    itens += `\n--------------------------------------\n`;
                 }
 
                 // ultimo item
                 if ((i + 1) == MEU_CARRINHO.length) {
                     texto = texto.replace(/\${itens}/g, itens);
-
-
+                    
                     let encode = encodeURIComponent(texto);
+
                     let URL = `https://wa.me/${CELULAR_EMPRESA}?text=${encode}`;
 
                     $('#btnEtapaResumo').attr('href', URL);
-
+                   
                 }
             });
         }
@@ -1142,12 +1146,13 @@ cardapio.metodos = {
         inputElement.value = words.join(" ");
     },
 
+    // obtém hora no formato decimal para comparação
     obterHoraDecimal:() => {
         var dataAtual = new Date();
         var horas = dataAtual.getHours();
         var minutos = dataAtual.getMinutes();
     
-        var horaDecimal = horas + minutos / 60;
+        var horaDecimal = parseFloat(`${horas}.${minutos}`);
     
         return horaDecimal;
     },
