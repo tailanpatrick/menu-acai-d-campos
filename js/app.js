@@ -1,4 +1,5 @@
 const CELULAR_EMPRESA = '553182903387';
+
 const LOJA_ABRE = 16;
 const LOJA_FECHA  = 22;
 
