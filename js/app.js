@@ -981,7 +981,7 @@ cardapio.metodos = {
             texto += '\n\n*Endereço de entrega:*';
             texto += `\n${MEU_ENDERECO.endereco}, ${MEU_ENDERECO.numero}, ${MEU_ENDERECO.bairro}`;
             texto += `\n${MEU_ENDERECO.cidade} - ${MEU_ENDERECO.uf} / ${MEU_ENDERECO.cep} ${MEU_ENDERECO.complemento}`;
-            texto += `\n\n*Total (Sem taxa de Entrega): R$ ${VALOR_CARRINHO.toFixed(2).replace('.', ',')}*`;
+            texto += `\n\n*Total (Sem a taxa de Entrega): R$ ${VALOR_CARRINHO.toFixed(2).replace('.', ',')}*`;
 
             var itens = '';
             
