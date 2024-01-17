@@ -163,12 +163,13 @@ cardapio.metodos = {
     // abrir a modal de carrinho
     abrirCarrinho: (abrir) => {
         if (abrir) {
-            $('#modalCarrinho').removeClass('hidden')
+            $('#modalCarrinho').removeClass('hidden');
+            $('body').addClass('modal-open');
             cardapio.metodos.carregarCarrinho();
         }
         else {
-
-            $('#modalCarrinho').addClass('hidden')
+            $('body').removeClass('modal-open');
+            $('#modalCarrinho').addClass('hidden');
         }
     },
 
@@ -433,9 +434,13 @@ cardapio.metodos = {
     removerItemCarrinho: (id) => {
         const indice = MEU_CARRINHO.findIndex((item) => item.idCarrinho == id.split("_")[1]);
 
+        MEU_CARRINHO.splice(indice, 1);
+        cardapio.metodos.atualizarBadgeTotal();
+        cardapio.metodos.atualizarQtdItensCarrinho();
         cardapio.metodos.animacaoeRemover(id, indice);
-
+        localStorage.setItem('meu_carrinho', JSON.stringify(MEU_CARRINHO));
     },
+    
     animacaoeRemover: (id, indice) => {
         item = $('#item-carrinho_' + id);
 
@@ -444,14 +449,7 @@ cardapio.metodos = {
 
         item.one('animationend', function () {
             item.remove();
-
-            MEU_CARRINHO.splice(indice, 1);
-
-
-            cardapio.metodos.atualizarBadgeTotal();
-            cardapio.metodos.atualizarQtdItensCarrinho();
-            localStorage.setItem('meu_carrinho', JSON.stringify(MEU_CARRINHO));
-
+        
 
             if (MEU_CARRINHO.length == 0) {
                 cardapio.metodos.carrinhoVazio();
@@ -981,7 +979,7 @@ cardapio.metodos = {
             texto += '\n\n*Endereço de entrega:*';
             texto += `\n${MEU_ENDERECO.endereco}, ${MEU_ENDERECO.numero}, ${MEU_ENDERECO.bairro}`;
             texto += `\n${MEU_ENDERECO.cidade} - ${MEU_ENDERECO.uf} / ${MEU_ENDERECO.cep} ${MEU_ENDERECO.complemento}`;
-            texto += `\n\n*Total (Sem a taxa de Entrega): R$ ${VALOR_CARRINHO.toFixed(2).replace('.', ',')}*`;
+            texto += `\n\n*Total: R$ ${VALOR_CARRINHO.toFixed(2).replace('.', ',')} (Valor sem a taxa de Entrega)*`;
 
             var itens = '';
             
