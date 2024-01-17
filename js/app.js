@@ -437,6 +437,7 @@ cardapio.metodos = {
         MEU_CARRINHO.splice(indice, 1);
         cardapio.metodos.atualizarBadgeTotal();
         cardapio.metodos.atualizarQtdItensCarrinho();
+        cardapio.metodos.carregarValores();
         cardapio.metodos.animacaoeRemover(id, indice);
         localStorage.setItem('meu_carrinho', JSON.stringify(MEU_CARRINHO));
     },
@@ -454,7 +455,7 @@ cardapio.metodos = {
             if (MEU_CARRINHO.length == 0) {
                 cardapio.metodos.carrinhoVazio();
             }
-            cardapio.metodos.carregarValores();
+            
         });
     },
 
