@@ -320,8 +320,12 @@ cardapio.metodos = {
 
                     $("#itensCarrinho").append(itemCarrinho);
 
+                    const precoAcrescimo = ACRESCIMOS['acrescimos-comum'][0].price.toFixed(2).replace(".", ",");
+
                     if (e.id.includes("1l")) {
-                        $('#p-' + e.idCarrinho).text('Pode selecionar até 6 que não havera alteração no preço total, acima de 6 será cobrado R$ 1.50 por cada acréscimo comum adicional:');
+                        $('#p-' + e.idCarrinho).text(`Pode selecionar até 6 que não havera alteração no preço total, acima de 6 será cobrado R$ ${precoAcrescimo} por cada acréscimo comum adicional:`);
+                    } else {
+                        $('#p-' + e.idCarrinho).text(`Pode selecionar até 3 que não havera alteração no preço total, acima de 3 será cobrado R$ ${precoAcrescimo} por cada acréscimo comum adicional:`);
                     }
 
                     // deixar botão de menos com item de excluir se quantidade for 1
@@ -1231,7 +1235,7 @@ cardapio.templates = {
         
         <div class="col-12 acrescimos animated bounceInDown" id="acrescimos-\${idCarrinho}">
                 <p class="title-produto"><b>Acrescimos Comuns</b></p>
-                <p id="p-\${idCarrinho}">Pode selecionar até 3 que não havera alteração no preço total, acima de 3 será cobrado R$ 1.50 por cada acréscimo comum adicional:</p>
+                <p id="p-\${idCarrinho}">Pode selecionar até 3 que não havera alteração no preço total, acima de 3 será cobrado R$ por cada acréscimo comum adicional:</p>
 
                 <div id="acrescimoComum_\${id}_\${idCarrinho}" class="acrescimosComum">
 
