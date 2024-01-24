@@ -202,7 +202,7 @@
     .modal-full .acrescimo label {    
         font-size: 14px;
         height: 80px;
-        width: 150px;
+        width: 140px;
         align-items: center;
     
     }
@@ -215,7 +215,7 @@
     .acrescimosComum,
     .acrescimosEspecial {
         display: grid;
-        grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+        grid-template-columns: repeat(2, minmax(140px, 1fr));
         /* Define o tamanho das colunas */
     
         /* Define o espaçamento entre os itens */
