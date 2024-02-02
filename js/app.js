@@ -1173,7 +1173,7 @@ cardapio.metodos = {
             cardapio.metodos.mensagem(`Loja Fechada`, cor="red", tempo=10 * 60 * 1000);
             cardapio.metodos.mensagem(`Abrimos (Ter à Dom) às ${LOJA_ABRE.toFixed(2).replace(".", ":")} hrs.`, cor="red", tempo=15000);
 
-            if(hora >= (LOJA_ABRE - 1) && dia != 1 ) {
+            if((hora >= (LOJA_ABRE - 1) && hora <= LOJA_ABRE ) && dia != 1 ) {
                 cardapio.metodos.mensagem(`Agende seu pedido`, cor="green", tempo=20000);
             }
             
