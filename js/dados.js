@@ -5,14 +5,14 @@ var MENU = {
             "img": "./img/cardapio/creme/300ml.png",
             "name": "Creme 300ML",
             "dsc": "Creme de Açaí 300ML",
-            "price": 11.00
+            "price": 13.00
         },
         {
             "id": "creme-500",
             "img": "./img/cardapio/creme/500ml.png",
             "name": "Creme 500ML",
             "dsc": "Creme de Acaí 500ML",
-            "price": 13.00
+            "price": 15.00
         },
 
         {
@@ -20,7 +20,7 @@ var MENU = {
             "img": "./img/cardapio/creme/700ml.png",
             "name": "Creme 700ML",
             "dsc": "Creme de Açaí 700ML",
-            "price": 15.00
+            "price": 18.00
         },
         
         {
@@ -28,7 +28,7 @@ var MENU = {
             "img": "./img/cardapio/creme/1L.png",
             "name": "Creme 1L",
             "dsc": "Creme de Açaí 1L",
-            "price": 25.00
+            "price": 30.00
         }
 
     ],
@@ -38,7 +38,7 @@ var MENU = {
             "img": "./img/cardapio/vitamina/vitamina.png",
             "name": "Vitamina 300ML",
             "dsc": "Vitamina de Açai 300ML",
-            "price": 6.00
+            "price": 8.00
         },
 
         {
@@ -46,7 +46,7 @@ var MENU = {
             "img": "./img/cardapio/vitamina/vitamina.png",
             "name": "Vitamina 500ML",
             "dsc": "Vitamina de Açai 500ML",
-            "price": 9.00
+            "price": 12.00
         },
 
         {
@@ -54,7 +54,7 @@ var MENU = {
             "img": "./img/cardapio/vitamina/vitamina.png",
             "name": "Vitamina 700ML",
             "dsc": "Vitamina de Açai 700ML",
-            "price": 12.00
+            "price": 15.00
         }
        
     ],
@@ -64,21 +64,21 @@ var MENU = {
             "img": "./img/cardapio/mikshake/milkshake.png",
             "name": "Milk-Shake 300ML",
             "dsc": "Milk-Shake 300ML",
-            "price": 6.00
+            "price": 9.00
         },
         {
             "id": "milkshake-500",
             "img": "./img/cardapio/mikshake/milkshake.png",
             "name": "Milk-Shake 500ML",
             "dsc": "Milk-Shake 500ML",
-            "price": 9.00
+            "price": 12.00
         },
         {
             "id": "milkshake-700",
             "img": "./img/cardapio/mikshake/milkshake.png",
             "name": "Milk-Shake 700ML",
             "dsc": "Milk-Shake 700ML",
-            "price": 12.00
+            "price": 15.00
         }
        
     ]
@@ -89,47 +89,47 @@ var ACRESCIMOS = {
         {
             "id": "leite-em-po",
             "name": "Leite em Pó",
-            "price": 1.50
+            "price": 2.00
         },
         {
             "id": "leite-condensado",
             "name": "Leite Condensado",
-            "price": 1.50
+            "price": 2.00
         },     
         {
             "id": "morango",
             "name": "Morango",
-            "price": 1.50
+            "price": 2.00
         },
         {
             "id": "pacoca",
             "name": "Paçoca",
-            "price": 1.50
+            "price": 2.00
         },
         {
             "id": "kiwi",
             "name": "Kiwi",
-            "price": 1.50
+            "price": 2.00
         },
         {
             "id": "banana",
             "name": "Banana",
-            "price": 1.50
+            "price": 2.00
         },
         {
             "id": "granola",
             "name": "Granola",
-            "price": 1.50
+            "price": 2.00
         },
         {
             "id": "manga",
             "name": "Manga",
-            "price": 1.50
+            "price": 2.00
         },
         {
             "id": "abacaxi",
             "name": "Abacaxi",
-            "price": 1.50
+            "price": 2.00
         },
         
     ],
@@ -137,13 +137,9 @@ var ACRESCIMOS = {
         {
             "id": "bis",
             "name": "Bis",
-            "price": 2.00
+            "price": 3.00
         },
-        {
-            "id": "chantilly",
-            "name": "Chantilly",
-            "price": 2.00
-        },     
+
         {
             "id": "nutella",
             "name": "Nutella",
@@ -152,42 +148,42 @@ var ACRESCIMOS = {
         {
             "id": "kit-kat",
             "name": "Kit Kat",
-            "price": 2.50
+            "price": 3.50
         },
         {
             "id": "creme-ninho",
             "name": "Creme de Ninho",
-            "price": 2.50
+            "price": 4.00
         },
         {
             "id": "mouse-maracuja",
             "name": "Mouse de Maracujá",
-            "price": 2.50
+            "price": 4.00
         },
         {
             "id": "gotas-chocolate",
             "name": "Gotas de Chocolate",
-            "price": 1.50
+            "price": 2.50
         },
         {
             "id": "granulado",
             "name": "Granulado",
-            "price": 1.50
+            "price": 2.00
         },
         {
             "id": "mEm",
             "name": "M&M's",
-            "price": 2.00
+            "price": 3.00
         },
         {
             "id": "ovomaltine",
             "name": "Ovomaltine",
-            "price": 1.50
+            "price": 2.50
         },
         {
             "id": "chocoball",
             "name": "Chocoball",
-            "price": 2.00
+            "price": 2.50
         }
     ]
 }
