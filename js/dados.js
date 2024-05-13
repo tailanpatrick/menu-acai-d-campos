@@ -333,5 +333,6 @@ function carregarDadosNovamente() {
     MEU_CARRINHO = [];
     localStorage.setItem('meu_carrinho', JSON.stringify([MEU_CARRINHO]));
     recarregarScript();
+    cardapio.metodos.atualizarBadgeTotal();
     //console.log('O console foi aberto..');
 }
