@@ -1296,7 +1296,6 @@ cardapio.metodos = {
 	lojaAbertaOuFechada: () => {
 		let hora = cardapio.metodos.obterHoraDecimal();
 		let dia = new Date().getDay();
-		dia = 2;
 
 		$('#container-mensagens').html('');
 
